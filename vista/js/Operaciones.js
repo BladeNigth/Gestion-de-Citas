@@ -82,14 +82,12 @@ function Cambioc(mensaje){
 		 });
 }
 function CambiocA(mensaje){
-	
-	
 	 Swal.fire({
        	  type: 'success',
           title: 'Operacion exitosa',
           text: mensaje,
           }).then(function() {
-          window.location = "profileA.php";
+          window.location = "PerfilA.php";
 		 });
 }
  

@@ -111,17 +111,19 @@
                 }
         }
 
-        public function verificandocontra($clave,$user){
+        public function verificandocontra($user,$clave,$claveN){
 
             $this->ConectarDB();
-            $query = $this->conexion->prepare("SELECT nombre_usuario, password FROM usuarios WHERE
+            $query = $this->conexion->prepare("SELECT nombre_usuario, password FROM usuario WHERE
                                                  nombre_usuario = '$user' AND password = '$clave' ");
             $query->execute();
-            if($query->rowCount() > 1){
-                echo "<script>window.onload = function(){
-									EditPsicologo('los datos han sido actualizados exitosamente');
-					  			}
-					 </script>";
+            if($query->rowCount() >= 1){
+
+                $query2 = $this->conexion->prepare("UPDATE usuario SET password = '$claveN' WHERE
+                                nombre_usuario = '$user'and password = '$clave' ");
+                $query2->execute();
+                return true;
+
             }else{
                 return false;
             }

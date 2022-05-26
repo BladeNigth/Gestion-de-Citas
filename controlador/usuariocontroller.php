@@ -127,9 +127,13 @@
         }
 
 
-        public function verificarContraseña($clave, $usuario){
+        public function verificarContra($usuario, $clave,$claveN){
 
-            return $this->usuariodao->Verificandocontra($clave,$usuario);
+            if($this->usuariodao->Verificandocontra($usuario,$clave,$claveN)){
+                echo 'correcto';
+            }else{
+                echo 'incorrecto';
+            }
 
         }
     }

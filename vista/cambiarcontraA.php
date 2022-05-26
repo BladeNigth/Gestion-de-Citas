@@ -130,6 +130,9 @@ $usuario->cambiarContra();
                                     </div>
                             </div>
                             <!-- <div class="form-group">-->
+                            <?php
+                            echo '<input id="u" type="hidden" value="'.$perf.'" > ';
+                            ?>
                             <button name = "ccontra"  onclick="validar(event);"  class="btn btn-primary btn-block">
                                 Cambiar
                             </button>
@@ -177,19 +180,49 @@ $usuario->cambiarContra();
         if(document.getElementById("passNueva").value !== "") {
             if (document.getElementById("passNueva").value === document.getElementById("passNuevaC").value) {
                 if(document.getElementById("passActual").value !== document.getElementById("passNueva").value ){
+                    event.preventDefault();
+                    var evento = "evento=cambiarcontra&user="+document.getElementById("u").value+"&contra="+
+                        document.getElementById("passActual").value+ "&contraN="+document.getElementById("passNueva").value;
+                    $.ajax({
+                        url: '../controlador/evento.php',
+                        type: 'post',
+                        data: evento,
+                        datatype: "html",
+                        success: function (response){
+                            if (response === "correcto"){
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Operacion Exitosa...',
+                                    text: 'La Contraseña ha sido Cambiada Exitosamente'
+                                }).then(function() {
+                                    window.location = "PerfilA.php";
+                                });
+                            }else{
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: 'Contraseña Actual Incorrecta'
+                                })
+                            }
+                        },
+                        error: function (){
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'error'
+                            })
+                        }
+
+                    });
+
+                }else{
                     swal.fire({
                         type: 'error',
                         title: 'Opps',
-                        text: 'efectivamente'
+                        text: 'La nueva contraseña no puede ser igual a la antigua'
                     })
                     event.preventDefault();
-                }else{
-                    swal.fire({
-                        type: 'success',
-                        title: 'Opps',
-                        text: 'efectivamente'
-                    })
-                    event.preventDefault();
+
                 }
             }else{
                 Swal.fire({
