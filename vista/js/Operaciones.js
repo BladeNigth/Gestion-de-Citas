@@ -37,6 +37,10 @@ function eliminarU(user){
        
 })}
 
+function cambiarcontraU(user){
+	var evento = "evento=CambiarContra&user="+user;
+
+}
 
 function MensajeError(error){
 	Swal.fire({

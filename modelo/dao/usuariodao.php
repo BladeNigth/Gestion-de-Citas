@@ -37,7 +37,7 @@
                         $_SESSION['time_start_login'] = time();
                         print "<script> window.location= 'IndexA.php'; </script> ";
                     }else{
-                        session_start();
+
                         $_SESSION['user'] = $result["nombre_usuario"];
                         $_SESSION['time_start_login'] = time();
                         print "<script> window.location= 'Inicio.php'; </script> ";
@@ -109,6 +109,23 @@
 					  			}
 					 </script>";
                 }
+        }
+
+        public function verificandocontra($clave,$user){
+
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("SELECT nombre_usuario, password FROM usuarios WHERE
+                                                 nombre_usuario = '$user' AND password = '$clave' ");
+            $query->execute();
+            if($query->rowCount() > 1){
+                echo "<script>window.onload = function(){
+									EditPsicologo('los datos han sido actualizados exitosamente');
+					  			}
+					 </script>";
+            }else{
+                return false;
+            }
+
         }
 
     }

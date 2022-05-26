@@ -91,7 +91,7 @@
 					</div>
 					<div class="form-group col-6">
                       		<label for="frist_name">Fecha de Nacimiento</label>
-						<input class="form-control" type="text" name="fecha" placeholder="Fecha de Nacimiento"
+						<input class="form-control" type="date" name="fecha" placeholder="Fecha de Nacimiento"
 						value="'.$datos['fecha_de_nacimiento'].'">
 					</div>
 					<input style="visibility: hidden" name="editar" value = "'.$uss.'">';

@@ -1,18 +1,19 @@
 <?php
 session_start();
-require_once '../controlador/pacientecontroller.php';
-$paciente = new PacienteController();
-if (!$paciente->Logeado()){
-    $paciente->cerrarSesion('cerrarSesion');
+
+require '../controlador/usuariocontroller.php';
+$usuario = new UsuarioController();
+if(!$usuario->Logeado()){
+    $usuario->cerrarSesion('cerrarSesion');
 }else{
-    print "<script> window.location= 'login.php'; </script> ";
+    print "<script> window.location= 'loginpsicologo.php'; </script> ";
 }
 
 $perf = "";
-$perf = $_SESSION['paciente'];
+$perf = $_SESSION['userA'];
+$usuario->cambiarContra();
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +51,7 @@ $perf = $_SESSION['paciente'];
                         <i class="ion ion-android-person d-lg-none"></i>
                         <div class="d-sm-none d-lg-inline-block"><?php echo $perf?></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="PerfilPaciente.php" class="dropdown-item has-icon">
+                        <a href="PerfilA.php" class="dropdown-item has-icon">
                             <i class="ion ion-android-person"></i> Perfil
                         </a>
 
@@ -76,10 +77,10 @@ $perf = $_SESSION['paciente'];
                     </div>
                     <div class="sidebar-user-details">
                         <div class="user-name"> <?php
-                            $paciente->mostrarNombre($perf);
+                            $usuario->mostrarNombre($perf);
                             ?></div>
                         <div class="user-role">
-                            PACIENTE
+                            ADMINISTRADOR
                         </div>
                     </div>
                 </div>
@@ -91,7 +92,7 @@ $perf = $_SESSION['paciente'];
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="MostrarUsuarios.php" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
+                        <a href="indexA.php" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
                     </li>
 
                 </ul>
@@ -100,45 +101,50 @@ $perf = $_SESSION['paciente'];
         </div>
         <div class="main-content" >
             <section class="section">
+
                 <h1 class="section-header">
-                    <div>Perfil</div>
+                    <div>Editar</div>
                 </h1>
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-body">
-                                    <?php
 
-                                    $paciente->mostrarPerfil($perf);
+                    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                        <div class="card card-primary">
+                            <div class="card-header"><h4>Cambiar Contra</h4></div>
 
-                                    ?>
-                                </div>
+                            <div class="card-body">
+                                <form method="POST">
+                                    <div class="form-group col-6">
+                                        <label for="frist_name">Contraseña Actual</label>
+                                        <input required class="form-control"  type="password" Id="passActual"  name="passActual" placeholder="Contraseña Actual">
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="frist_name">Contraseña Nueva</label>
+                                        <input required class="form-control" type="password" id="passNueva" name="passNueva" placeholder="Contraseña Nueva"
+                                        >
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="frist_name">Confirma Contraseña Nueva</label>
+                                        <input  required  class="form-control" type="password" id="passNuevaC" name="passNuevaC" placeholder="Contraseña Nueva"
+                                        >
+                                    </div>
+                            </div>
+                            <!-- <div class="form-group">-->
+                            <button name = "ccontra"  onclick="validar(event);"  class="btn btn-primary btn-block">
+                                Cambiar
+                            </button>
+                            <!-- </div>-->
+                            </form>
+                            <div class="text-center dropdown-item has-icon">
+                                <a class="txt1" href="PerfilA.php">
+                                    Cancelar
+                                </a>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-body p-0">
-                                    <a href="EditarPaciente.php" class="dropdown-item has-icon" >
-                                        Editar Perfil
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-header">
-                                <div class="card-body p-0">
-                                    <a href="cambiarcontraU.php" class="dropdown-item has-icon" >
-                                        Cambiar Contraseña
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+            </div>
+
             </section>
         </div>
         <footer class="main-footer">
@@ -161,6 +167,42 @@ $perf = $_SESSION['paciente'];
 <script src="dist/modules/chart.min.js"></script>
 <script src="dist/modules/summernote/summernote-lite.js"></script>
 <script src="dist/js/scripts.js"></script>
+<script src="js/sweetalert2@8.js"></script>
+<!--=============================================================================================-->
+<script src="js/Operaciones.js"></script>
 
+<script>
+    function validar(event){
+
+        if(document.getElementById("passNueva").value !== "") {
+            if (document.getElementById("passNueva").value === document.getElementById("passNuevaC").value) {
+                if(document.getElementById("passActual").value !== document.getElementById("passNueva").value ){
+                    swal.fire({
+                        type: 'error',
+                        title: 'Opps',
+                        text: 'efectivamente'
+                    })
+                    event.preventDefault();
+                }else{
+                    swal.fire({
+                        type: 'success',
+                        title: 'Opps',
+                        text: 'efectivamente'
+                    })
+                    event.preventDefault();
+                }
+            }else{
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Las Contraseñas nuevas no son iguales!'
+                })
+                event.preventDefault();
+            }
+        }else{
+
+        }
+    }
+</script>
 </body>
 </html>

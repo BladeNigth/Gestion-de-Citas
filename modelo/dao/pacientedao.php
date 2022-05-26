@@ -1,10 +1,12 @@
 <?php
     require_once "conexion.php";
     class Pacientedao {
+
         private $paciente;
 
         public function __construct()
         {
+
         }
 
         public function ConectarDB(){
@@ -25,7 +27,6 @@
                 $query->execute();
                 $result = $query->fetch(PDO::FETCH_ASSOC);
                 if($query->rowCount() >= 1){
-                    session_start();
                     $_SESSION['paciente'] = $result["usuario_paciente"];
                     $_SESSION['time_start_login'] = time();
                     print "<script> window.location= 'InicioP.php'; </script> ";
