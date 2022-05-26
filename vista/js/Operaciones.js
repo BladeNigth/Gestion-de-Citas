@@ -127,6 +127,16 @@ function EditPsicologo(mensaje){
 	});
 
 }
+function EditPaciente(mensaje){
+    // radicado 4433221008105486
+    Swal.fire({
+        type: 'success',
+        title: 'Operacion exitosa',
+        text: mensaje,
+    }).then(function(){
+        window.location = 'perfilPaciente.php'
+    });
+}
 function EditarUA(mensaje){
 	Swal.fire({
 		type: 'success',
@@ -134,6 +144,15 @@ function EditarUA(mensaje){
 		text: mensaje,
 	}).then(function(){
 			window.location = 'MostrarUsuarios.php'
+	});
+}
+function EditarPsicologo(mensaje){
+	Swal.fire({
+		type: 'success',
+		title: 'Operacion exitosa',
+		text: mensaje,
+	}).then(function(){
+		window.location = 'MostrarUsuarios.php'
 	});
 }
 function Mensajeo(mensaje){

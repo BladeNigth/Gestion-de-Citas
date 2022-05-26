@@ -50,7 +50,7 @@ $perf = $_SESSION['paciente'];
                         <i class="ion ion-android-person d-lg-none"></i>
                         <div class="d-sm-none d-lg-inline-block"><?php echo $perf?></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="PerfilPracticante.php" class="dropdown-item has-icon">
+                        <a href="PerfilPaciente.php" class="dropdown-item has-icon">
                             <i class="ion ion-android-person"></i> Perfil
                         </a>
 

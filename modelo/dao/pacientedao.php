@@ -59,4 +59,37 @@
             }
         }
 
+        public function buscarPaciente($user){
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("SELECT * FROM paciente WHERE usuario_paciente = '$user'");
+            $query->execute();
+            $datos = $query->fetch(PDO::FETCH_ASSOC);
+            if($query->rowCount() >= 1 ){
+                return $datos;
+            }else{
+                echo "<script> window.onload = function (){
+                      MensajeError('No se encuentra el Usuario')  
+                      }</script>";
+            }
+        }
+
+        public function edit($us){
+            $nombre = $_POST['nombre'];
+            $correo = $_POST['correo'];
+            $telefono = $_POST['telefono'];
+            $cedula = $_POST['cedula'];
+            $fecha = $_POST['fecha'];
+
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("UPDATE paciente SET nombre_completo = '$nombre',
+            correo = 'correo', cedula_paciente = 'cedula', telefono = '$telefono', fecha_de_nacimiento = 
+                '$fecha' WHERE usuario_paciente = $us");
+            $query->execute();
+            echo "<script>window.onload = function(){
+									EditPsicologo('los datos han sido actualizados exitosamente');
+					  			}
+					 </script>";
+        }
+
+
     }

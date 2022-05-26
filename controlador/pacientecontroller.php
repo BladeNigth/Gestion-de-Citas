@@ -66,7 +66,41 @@
         }
 
         public function verusuarioaEditar($uss){
+            $datos = $this->pacientedao->buscarPaciente($uss);
+            echo '<div class="form-group col-6">
+                      		<label for="frist_name">Nombre y Apellidos</label>
+						<input class="form-control" type="text" name="nombre" placeholder="Nombre Completo"
+						value="'.$datos['nombre_completo'].'">
+					</div>
+					
+					<div class="form-group col-6">
+                      		<label for="frist_name">Correo</label>
+						<input class="form-control" type="email" name="email" placeholder="Correo"
+						value="'.$datos['correo'].'">
+					</div>
+					
+					<div class="form-group col-6">
+                      		<label for="frist_name">Telefono</label>
+						<input class="form-control" type="number" name="telefono" placeholder="Telefono"
+						value="'.$datos['telefono'].'">
+					</div>
+					<div class="form-group col-6">
+                      		<label for="frist_name">Cedula</label>
+						<input class="form-control" type="number" name="cedula" placeholder="Cedula"
+						value="'.$datos['cedula_paciente'].'">
+					</div>
+					<div class="form-group col-6">
+                      		<label for="frist_name">Fecha de Nacimiento</label>
+						<input class="form-control" type="text" name="fecha" placeholder="Fecha de Nacimiento"
+						value="'.$datos['fecha_de_nacimiento'].'">
+					</div>
+					<input style="visibility: hidden" name="editar" value = "'.$uss.'">';
+        }
 
+        public function editar($uss){
+            if(isset($_POST['edita'])){
+                $this->pacientedao->edit();
+            }
         }
 
     }
