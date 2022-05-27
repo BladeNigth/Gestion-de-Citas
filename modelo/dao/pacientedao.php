@@ -42,6 +42,35 @@
             }
         }
 
+        public function Registrar($informacion){
+            $username= $informacion[0];
+            $clave = $informacion[1];
+            $nombre = $informacion[2];
+            $email = $informacion[3];
+            $telefono = $informacion[4];
+            $sexo = $informacion[5];
+            $identificacion = $informacion[6];
+            $fechaN = $informacion[7];
+
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("INSERT INTO paciente(usuario_paciente,contraseña_paciente,nombre_completo,
+                     correo,telefono,genero,cedula_paciente,fecha_de_nacimiento) VALUES ('$username','$clave','$nombre','$email','$telefono',
+                     '$sexo','$identificacion','$fechaN')");
+            $query->execute();
+
+        }
+
+        public function ComprobarUsuario($usuario){
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("SELECT * FROM paciente WHERE usuario_paciente = '$usuario'");
+            $query->execute();
+            if($query->rowCount() >= 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         public function buscarNombre($us){
             $this->ConectarDB();
             $query = $this->conexion->prepare("SELECT nombre_completo FROM paciente WHERE usuario_paciente = '$us'");
@@ -83,7 +112,7 @@
 
             $this->ConectarDB();
             $query = $this->conexion->prepare("UPDATE paciente SET nombre_completo = '$nombre',
-            correo = 'correo', cedula_paciente = 'cedula', telefono = '$telefono', fecha_de_nacimiento = 
+            correo = '$correo', cedula_paciente = '$cedula', telefono = '$telefono', fecha_de_nacimiento = 
                 '$fecha' WHERE usuario_paciente = $us");
             $query->execute();
             echo "<script>window.onload = function(){
@@ -92,5 +121,23 @@
 					 </script>";
         }
 
+        public function verificandocontra($user,$clave,$claveN){
+
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("SELECT usuario_paciente, contraseña_paciente FROM paciente 
+                                        WHERE usuario_paciente = '$user' AND contraseña_paciente = '$clave' ");
+            $query->execute();
+            if($query->rowCount() >= 1){
+
+                $query2 = $this->conexion->prepare("UPDATE paciente SET contraseña_paciente = '$claveN'
+                                        WHERE usuario_paciente = '$user'AND contraseña_paciente = '$clave' ");
+                $query2->execute();
+                return true;
+
+            }else{
+                return false;
+            }
+
+        }
 
     }

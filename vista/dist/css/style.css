@@ -2073,9 +2073,9 @@ table tr:hover .table-links {
 /* form group */
 .form-group label {
 	font-weight: 500;
-	color: #868e96;
+	color: white;
 	font-family: 'Montserrat';
-	font-size: 11px;
+	font-size: 16px;
 	letter-spacing: .5px;
 }
 .form-group.floating-addon {

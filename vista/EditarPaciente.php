@@ -123,7 +123,7 @@ $perf = $_SESSION['paciente'];
                                 </form>
 
                                 <div class=" text-center dropdown-item has-icon">
-                                    <a class="txt1" href="PerfilPracticante.php">
+                                    <a class="txt1" href="PerfilPaciente.php">
                                         Cancelar
                                     </a>
                                 </div>

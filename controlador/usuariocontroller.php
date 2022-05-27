@@ -98,33 +98,6 @@
             }
         }
 
-        public function cambiarContra(){
-            /*
-            if(isset($_POST['ccontra'])){
-
-                if(isset($_POST['passActual']) && isset($_POST['passNueva']) && isset($_POST['passNuevaC']) ) {
-
-                    $passActual = $_POST['passActual'];
-                    $passNueva = $_POST['passNueva'];
-                    $passNuevaC = $_POST['passNuevaC'];
-                    $user = $_SESSION["userA"];
-
-                    if($this->usuariodao($passActual)){
-
-
-
-                    }else{
-
-
-
-                    }
-
-                }
-
-            }
-            */
-
-        }
 
 
         public function verificarContra($usuario, $clave,$claveN){

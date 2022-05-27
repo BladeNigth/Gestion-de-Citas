@@ -1,18 +1,18 @@
 <?php
 session_start();
-
-require '../controlador/usuariocontroller.php';
-$usuario = new UsuarioController();
-if(!$usuario->Logeado()){
-    $usuario->cerrarSesion('cerrarSesion');
+require_once '../controlador/pacientecontroller.php';
+$paciente = new PacienteController();
+if (!$paciente->Logeado()){
+    $paciente->cerrarSesion('cerrarSesion');
 }else{
-    print "<script> window.location= 'loginpsicologo.php'; </script> ";
+    print "<script> window.location= 'login.php'; </script> ";
 }
 
 $perf = "";
-$perf = $_SESSION['userA'];
+$perf = $_SESSION['paciente'];
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +50,7 @@ $perf = $_SESSION['userA'];
                         <i class="ion ion-android-person d-lg-none"></i>
                         <div class="d-sm-none d-lg-inline-block"><?php echo $perf?></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="PerfilA.php" class="dropdown-item has-icon">
+                        <a href="PerfilPaciente.php" class="dropdown-item has-icon">
                             <i class="ion ion-android-person"></i> Perfil
                         </a>
 
@@ -76,10 +76,10 @@ $perf = $_SESSION['userA'];
                     </div>
                     <div class="sidebar-user-details">
                         <div class="user-name"> <?php
-                            $usuario->mostrarNombre($perf);
+                            $paciente->mostrarNombre($perf);
                             ?></div>
                         <div class="user-role">
-                            ADMINISTRADOR
+                            PACIENTE
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ $perf = $_SESSION['userA'];
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="indexA.php" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
+                        <a href="" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
                     </li>
 
                 </ul>
@@ -100,7 +100,6 @@ $perf = $_SESSION['userA'];
         </div>
         <div class="main-content" >
             <section class="section">
-
                 <h1 class="section-header">
                     <div>Editar</div>
                 </h1>
@@ -138,15 +137,13 @@ $perf = $_SESSION['userA'];
                             <!-- </div>-->
                             </form>
                             <div class="text-center dropdown-item has-icon">
-                                <a class="txt1" href="PerfilA.php">
+                                <a class="txt1" href="PerfilPaciente.php">
                                     Cancelar
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </section>
         </div>
         <footer class="main-footer">
@@ -180,7 +177,7 @@ $perf = $_SESSION['userA'];
             if (document.getElementById("passNueva").value === document.getElementById("passNuevaC").value) {
                 if(document.getElementById("passActual").value !== document.getElementById("passNueva").value ){
                     event.preventDefault();
-                    var evento = "evento=cambiarcontra&user="+document.getElementById("u").value+"&contra="+
+                    var evento = "evento=cambiarcontraP&user="+document.getElementById("u").value+"&contra="+
                         document.getElementById("passActual").value+ "&contraN="+document.getElementById("passNueva").value;
                     $.ajax({
                         url: '../controlador/evento.php',
@@ -194,7 +191,7 @@ $perf = $_SESSION['userA'];
                                     title: 'Operacion Exitosa...',
                                     text: 'La Contraseña ha sido Cambiada Exitosamente'
                                 }).then(function() {
-                                    window.location = "PerfilA.php";
+                                    window.location = "PerfilPaciente.php";
                                 });
                             }else{
                                 Swal.fire({
@@ -236,5 +233,6 @@ $perf = $_SESSION['userA'];
         }
     }
 </script>
+
 </body>
 </html>

@@ -130,7 +130,7 @@ $perf = $_SESSION['paciente'];
                             </div>
                             <div class="card-header">
                                 <div class="card-body p-0">
-                                    <a href="cambiarcontraU.php" class="dropdown-item has-icon" >
+                                    <a href="cambiarcontraPaciente.php" class="dropdown-item has-icon" >
                                         Cambiar Contraseña
                                     </a>
                                 </div>

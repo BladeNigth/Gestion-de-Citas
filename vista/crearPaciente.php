@@ -1,19 +1,14 @@
 <?php
 session_start();
-require '../controlador/usuariocontroller.php';
-$usuario = new UsuarioController();
+require '../controlador/pacientecontroller.php';
+$paciente = new PacienteController();
 
-if($usuario->Logeado()){
-    $usuario->DatosLogin();
+if($paciente->Logeado()){
+    $paciente->DatosRegistro();
 }else{
-    print "<script> window.location= 'IndexA.php'; </script> ";
+    print "<script> window.location= 'iniciop.php'; </script> ";
 }
 
-if(!isset($_SESSION['tipo_user'])){
-
-}else{
-    print "<script> window.location= 'IndexA.php'; </script> ";
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -22,10 +17,9 @@ if(!isset($_SESSION['tipo_user'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.minnav.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
@@ -43,25 +37,16 @@ if(!isset($_SESSION['tipo_user'])){
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-
-    <link rel="stylesheet" href="dist/modules/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/modules/ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
-
-    <link rel="stylesheet" href="dist/modules/summernote/summernote-lite.css">
-    <link rel="stylesheet" href="dist/modules/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="dist/css/demo.css">
-    <link rel="stylesheet" href="dist/css/style.css">
-
+    <link rel="stylesheet" href="css/local.css">
     <link rel="stylesheet" href="css/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     <!--===============================================================================================-->
 </head>
 <body>
 
 <div class="limiter" > </div>
 
-
-<span class="title"> Gestion De Citas PAP</span>
 
 <div class="container-login100" style="background-image: url('images/Fondo.jpg');" >
 
@@ -71,30 +56,82 @@ if(!isset($_SESSION['tipo_user'])){
 
     <div class="wrap-login100">
 
+
             <span class="login100-form-title p-b-34 p-t-27">
-						Iniciar Sesion
+						Crear Usuario
 
             </span>
-        <form  method="post">
+        <form  method="post" enctype="multipart/form-data">
             <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                <input class="input100" type="text" name="username" placeholder="Usuario">
+
+                    <input class="input100" type="text" name="username" placeholder="Usuario" required>
+
                 <span class="focus-input100" data-placeholder="&#xf207;"></span>
             </div>
 
             <div class="wrap-input100 validate-input" data-validate="Enter password">
-                <input class="input100" type="password" name="pass" placeholder="Contraseña">
+
+                    <input class="input100" type="password" name="pass" placeholder="Contraseña" required>
+
                 <span class="focus-input100" data-placeholder="&#xf191;"></span>
             </div>
 
+
+            <div class="wrap-input100 validate-input" data-validate="Enter Nombre">
+
+                    <input class="input100" type="text" name="nombre" placeholder="Nombres" required>
+
+                <span class="focus-input100" data-placeholder="&#xf207;"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Enter correo">
+
+                    <input class="input100" type="email" name="email" placeholder="Correo" required>
+
+                <span class="focus-input100" data-placeholder="&#xf15a;"></span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter Telefono">
+
+                    <input class="input100" type="number" name="telefono" placeholder="Telefono" required>
+
+                <span class="focus-input100" data-placeholder="&#xf2be;"></span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter Identificacion">
+
+                    <input class="input100" type="number" name="identificacion" placeholder="Identificacion" required>
+
+                <span class="focus-input100" data-placeholder="&#xf207;"></span>
+            </div>
+            <div class="wrap-input100 validate-">
+                <label class="label" for="frist_name" >Fecha de Nacimiento</label>
+
+                    <input type="text" class="form-control" name="FechaNacimiento" required/>
+
+            </div>
+            <div class="form-group col-6">
+                <label class="label" for="frist_name" >Sexo</label>
+
+                    <select class="form-control" name="sexo" required>
+                        <option value="M" select >Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+
+            </div>
+
+
             <div class="container-login100-form-btn">
-                <button class="login100-form-btn" name="login" id="login" type="submit" value="send">
-                    Iniciar
+                <button class="login100-form-btn" name = "registro"  type="submit" value="send">
+                    Crear
                 </button>
             </div>
         </form>
-
         <div class="text-center p-t-90">
-            <a class="txt1" href="recordar.php">
+            <a class="txt1" href="">
+                Crear Usuario
+            </a>
+        </div>
+        <div class="text-center p-t-90">
+            <a class="txt1" href="">
                 Recordar Contraseña
             </a>
         </div>
@@ -109,6 +146,9 @@ if(!isset($_SESSION['tipo_user'])){
     </div>
 
 </div>
+
+
+
 
 <div id="dropDownSelect1"></div>
 
@@ -132,5 +172,27 @@ if(!isset($_SESSION['tipo_user'])){
 <script src="js/sweetalert2@8.js"></script>
 <!--===============================================================================================-->
 <script src="js/Operaciones.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
+    $(function() {
+        $('input[name="FechaNacimiento"]').daterangepicker({
+            "singleDatePicker": true,
+            "autoApply": true,
+            "alwaysShowCalendars": true,
+            "startDate": moment(),
+            "endDate": "05/26/2022",
+            "opens": "left",
+            "drops": "auto"
+        }, function(start, end, label) {
+            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+        });
+    });
+</script>
+
+
 </body>
 </html>

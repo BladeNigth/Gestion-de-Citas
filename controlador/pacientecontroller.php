@@ -30,6 +30,37 @@
             }
         }
 
+        public function DatosRegistro(){
+            if(isset($_POST['registro'])){
+
+                if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['nombre']) &&
+                    isset($_POST['pass']) && isset($_POST['telefono']) && isset($_POST['identificacion'])
+                    && isset($_POST['sexo']) && isset($_POST['FechaNacimiento']))
+                {
+                    $info_usuario = [];
+                    array_push($info_usuario,$_POST['username']);
+                    array_push($info_usuario,$_POST['pass']);
+                    array_push($info_usuario,$_POST['nombre']);
+                    array_push($info_usuario,$_POST['email']);
+                    array_push($info_usuario,$_POST['telefono']);
+                    array_push($info_usuario,$_POST['sexo']);
+                    array_push($info_usuario,$_POST['identificacion']);
+                    array_push($info_usuario,$_POST['FechaNacimiento']);
+                    if($this->pacientedao->ComprobarUsuario($info_usuario[0])){
+                        echo "<script> window.onload = function (){
+                      MensajeError('El usuario Ya Existe')  
+                      }</script>";
+                    }else{
+                        $this->pacientedao->Registrar($info_usuario);
+                        echo "<script> window.onload = function (){
+                      MensajeCorrecto('El Usuario ha sido Registrado'); 
+                      }</script>";
+                    }
+                }
+
+            }
+        }
+
         public function IniciarSesion($info_usuario){
             $this->pacientedao->Logear($info_usuario);
 
@@ -99,8 +130,18 @@
 
         public function editar($uss){
             if(isset($_POST['edita'])){
-                $this->pacientedao->edit();
+                $this->pacientedao->edit($uss);
             }
+        }
+
+        public function verificarContra($usuario, $clave,$claveN){
+
+            if($this->pacientedao->Verificandocontra($usuario,$clave,$claveN)){
+                echo 'correcto';
+            }else{
+                echo 'incorrecto';
+            }
+
         }
 
     }

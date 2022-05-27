@@ -6,12 +6,9 @@
     if($paciente->Logeado()){
         $paciente->DatosLogin();
     }else{
-       // print "<script> window.location= 'iniciop.php'; </script> ";
+        print "<script> window.location= 'iniciop.php'; </script> ";
     }
 
-    if(!isset($_SESSION['paciente'])){
-
-    }
 ?>
 
 <!DOCTYPE html>
@@ -59,16 +56,17 @@
 
 <div class="limiter" > </div>
 
-
+<span class="title"> Gestion De Citas PAP</span>
 
 
         <div class="container-login100" style="background-image: url('images/Fondo.jpg');" >
 
 
-            <span class="title"> Gestion De Citas PAP</span>
+
 
 
             <div class="wrap-login100">
+
 
             <span class="login100-form-title p-b-34 p-t-27">
 						Iniciar Sesion
@@ -76,12 +74,16 @@
             </span>
                 <form  method="post">
                     <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                        <input class="input100" type="text" name="username" placeholder="Usuario">
+
+                            <input class="input100" type="text" name="username" placeholder="Usuario">
+
                         <span class="focus-input100" data-placeholder="&#xf207;"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <input class="input100" type="password" name="pass" placeholder="Contraseña">
+
+                            <input class="input100" type="password" name="pass" placeholder="Contraseña">
+
                         <span class="focus-input100" data-placeholder="&#xf191;"></span>
                     </div>
 
@@ -92,13 +94,19 @@
                     </div>
                 </form>
                 <div class="text-center p-t-90">
-                    <a class="txt1" href="crearusuario.php">
+                    <a class="txt1" href="crearPaciente.php">
                         Crear Usuario
                     </a>
                 </div>
                 <div class="text-center p-t-90">
-                    <a class="txt1" href="recordar.php">
+                    <a class="txt1" href="">
                         Recordar Contraseña
+                    </a>
+                </div>
+
+                <div class="text-center p-t-90">
+                    <a class="txt1" href="index.php">
+                        Regresar a Home
                     </a>
                 </div>
 
@@ -108,52 +116,7 @@
         </div>
 
 
-<!--
-<div class="limiter">
 
-
-
-
-    <div class="container-login100" style="background-image: url('images/Fondo.jpg');">
-        <div class="wrap-login100">
-
-            <span class="login100-form-title p-b-34 p-t-27">
-						Iniciar Sesion
-					</span>
-            <form  method="post">
-                <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                    <input class="input100" type="text" name="username" placeholder="Usuario">
-                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <input class="input100" type="password" name="pass" placeholder="Contraseña">
-                    <span class="focus-input100" data-placeholder="&#xf191;"></span>
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" name="login" id="login" type="submit" value="send">
-                        Iniciar
-                    </button>
-                </div>
-            </form>
-            <div class="text-center p-t-90">
-                <a class="txt1" href="crearusuario.php">
-                    Crear Usuario
-                </a>
-            </div>
-            <div class="text-center p-t-90">
-                <a class="txt1" href="recordar.php">
-                    Recordar Contraseña
-                </a>
-            </div>
-
-
-        </div>
-
-    </div>
-</div>
--->
 
 <div id="dropDownSelect1"></div>
 
