@@ -35,7 +35,7 @@
 
                 if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['nombre']) &&
                     isset($_POST['pass']) && isset($_POST['telefono']) && isset($_POST['identificacion'])
-                    && isset($_POST['sexo']) && isset($_POST['FechaNacimiento']))
+                    && isset($_POST['sexo']) && isset($_POST['Fecha']))
                 {
                     $info_usuario = [];
                     array_push($info_usuario,$_POST['username']);
@@ -45,7 +45,7 @@
                     array_push($info_usuario,$_POST['telefono']);
                     array_push($info_usuario,$_POST['sexo']);
                     array_push($info_usuario,$_POST['identificacion']);
-                    array_push($info_usuario,$_POST['FechaNacimiento']);
+                    array_push($info_usuario,$_POST['Fecha']);
                     if($this->pacientedao->ComprobarUsuario($info_usuario[0])){
                         echo "<script> window.onload = function (){
                       MensajeError('El usuario Ya Existe')  

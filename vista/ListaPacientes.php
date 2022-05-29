@@ -12,6 +12,7 @@ if(!$usuario->Logeado()){
 $perf = "";
 $perf = $_SESSION['userA'];
 
+
 ?>
 
 <!DOCTYPE html>
@@ -91,10 +92,10 @@ $perf = $_SESSION['userA'];
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="indexA.php" ><i class="ion ion-ios-albums-outline"></i><span>Psicologos</span></a>
+                        <a href="ListaPsicologos.php" ><i class="ion ion-ios-albums-outline"></i><span>Psicologos</span></a>
                     </li>
                     <li>
-                        <a href="indexA.php" ><i class="ion ion-ios-albums-outline"></i><span>Pacientes</span></a>
+                        <a href="ListaPacientes.php" ><i class="ion ion-ios-albums-outline"></i><span>Pacientes</span></a>
                     </li>
 
                 </ul>
@@ -103,53 +104,47 @@ $perf = $_SESSION['userA'];
         </div>
         <div class="main-content" >
             <section class="section">
-
                 <h1 class="section-header">
-                    <div>Editar</div>
+                    <div>Lista Pacientes</div>
                 </h1>
-                <div class="row">
+                <div class="card-body">
+                    <div class="card" >
+                        <div class="col-md-12">
+                            <div class="tile">
+                                <div class="tile-body">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Usuario</th>
+                                            <th>Nombre</th>
+                                            <th>Cedula</th>
+                                            <th>Correo</th>
+                                            <th>Telefono</th>
+                                            <th> <i class="ion ion-gear-b"></i></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
 
-                    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                        <div class="card card-primary">
-                            <div class="card-header"><h4>Cambiar Contra</h4></div>
+                                        $usuario->MostrarPacientes();
 
-                            <div class="card-body">
-                                <form method="POST">
-                                    <div class="form-group col-6">
-                                        <label for="frist_name">Contraseña Actual</label>
-                                        <input required class="form-control"  type="password" Id="passActual"  name="passActual" placeholder="Contraseña Actual">
-                                    </div>
+                                        ?>
+                                        </tbody>
+                                    </table>
 
-                                    <div class="form-group col-6">
-                                        <label for="frist_name">Contraseña Nueva</label>
-                                        <input required class="form-control" type="password" id="passNueva" name="passNueva" placeholder="Contraseña Nueva"
-                                        >
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label for="frist_name">Confirma Contraseña Nueva</label>
-                                        <input  required  class="form-control" type="password" id="passNuevaC" name="passNuevaC" placeholder="Contraseña Nueva"
-                                        >
-                                    </div>
+                                </div>
                             </div>
-                            <!-- <div class="form-group">-->
-                            <?php
-                            echo '<input id="u" type="hidden" value="'.$perf.'" > ';
-                            ?>
-                            <button name = "ccontra"  onclick="validar(event);"  class="btn btn-primary btn-block">
-                                Cambiar
-                            </button>
-                            <!-- </div>-->
-                            </form>
-                            <div class="text-center dropdown-item has-icon">
-                                <a class="txt1" href="PerfilA.php">
-                                    Cancelar
-                                </a>
-                            </div>
+                        </div>
+                        <div class="container-login100-form-btn">
+
+                            <h1 class="section-header" id="crear_paciente">
+                                <a class="color-letra" href="CrearPacienteA.php">Crear Paciente</a>
+                            </h1>
+
                         </div>
                     </div>
                 </div>
-
-
             </section>
         </div>
         <footer class="main-footer">
@@ -172,72 +167,13 @@ $perf = $_SESSION['userA'];
 <script src="dist/modules/chart.min.js"></script>
 <script src="dist/modules/summernote/summernote-lite.js"></script>
 <script src="dist/js/scripts.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">$('#sampleTable').DataTable();</script>
+<!--=============================================================================================-->
 <script src="js/sweetalert2@8.js"></script>
 <!--=============================================================================================-->
 <script src="js/Operaciones.js"></script>
 
-<script>
-    function validar(event){
-
-        if(document.getElementById("passNueva").value !== "") {
-            if (document.getElementById("passNueva").value === document.getElementById("passNuevaC").value) {
-                if(document.getElementById("passActual").value !== document.getElementById("passNueva").value ){
-                    event.preventDefault();
-                    var evento = "evento=cambiarcontra&user="+document.getElementById("u").value+"&contra="+
-                        document.getElementById("passActual").value+ "&contraN="+document.getElementById("passNueva").value;
-                    $.ajax({
-                        url: '../controlador/evento.php',
-                        type: 'post',
-                        data: evento,
-                        datatype: "html",
-                        success: function (response){
-                            if (response === "correcto"){
-                                Swal.fire({
-                                    type: 'success',
-                                    title: 'Operacion Exitosa...',
-                                    text: 'La Contraseña ha sido Cambiada Exitosamente'
-                                }).then(function() {
-                                    window.location = "PerfilA.php";
-                                });
-                            }else{
-                                Swal.fire({
-                                    type: 'error',
-                                    title: 'Oops...',
-                                    text: 'Contraseña Actual Incorrecta'
-                                })
-                            }
-                        },
-                        error: function (){
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: 'error'
-                            })
-                        }
-
-                    });
-
-                }else{
-                    swal.fire({
-                        type: 'error',
-                        title: 'Opps',
-                        text: 'La nueva contraseña no puede ser igual a la antigua'
-                    })
-                    event.preventDefault();
-
-                }
-            }else{
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Las Contraseñas nuevas no son iguales!'
-                })
-                event.preventDefault();
-            }
-        }else{
-
-        }
-    }
-</script>
 </body>
 </html>

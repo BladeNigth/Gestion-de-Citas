@@ -13,6 +13,22 @@ body {
 	background-color: #F6F6F6;
 	font-size: 14px;
 }
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+#crear_paciente{
+	width: 180px !important;
+	margin-left: 430px;
+	background-color: #574B90;
+	font-size: 16px;
+}
+
+.color-letra{
+	color: white;
+}
 
 /*reset*/
 /* remove box shadow */

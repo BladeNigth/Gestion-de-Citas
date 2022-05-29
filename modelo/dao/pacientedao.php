@@ -54,7 +54,8 @@
 
             $this->ConectarDB();
             $query = $this->conexion->prepare("INSERT INTO paciente(usuario_paciente,contraseña_paciente,nombre_completo,
-                     correo,telefono,genero,cedula_paciente,fecha_de_nacimiento) VALUES ('$username','$clave','$nombre','$email','$telefono',
+                     correo,telefono,genero,cedula_paciente,fecha_de_nacimiento)
+                    VALUES ('$username','$clave','$nombre','$email','$telefono',
                      '$sexo','$identificacion','$fechaN')");
             $query->execute();
 
@@ -105,7 +106,7 @@
 
         public function edit($us){
             $nombre = $_POST['nombre'];
-            $correo = $_POST['correo'];
+            $correo = $_POST['email'];
             $telefono = $_POST['telefono'];
             $cedula = $_POST['cedula'];
             $fecha = $_POST['fecha'];
@@ -113,10 +114,10 @@
             $this->ConectarDB();
             $query = $this->conexion->prepare("UPDATE paciente SET nombre_completo = '$nombre',
             correo = '$correo', cedula_paciente = '$cedula', telefono = '$telefono', fecha_de_nacimiento = 
-                '$fecha' WHERE usuario_paciente = $us");
+                '$fecha' WHERE usuario_paciente = '$us'");
             $query->execute();
             echo "<script>window.onload = function(){
-									EditPsicologo('los datos han sido actualizados exitosamente');
+									EditPaciente('los datos han sido actualizados exitosamente');
 					  			}
 					 </script>";
         }

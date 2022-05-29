@@ -21,7 +21,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
     <title>Inicio</title>
-    <link rel ="ico" href="/vista/images/icons/favicon.ico">
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <link rel="stylesheet" href="dist/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="dist/modules/ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
@@ -87,12 +87,15 @@
                 <ul class="sidebar-menu">
                     <li class="menu-header">Principal</li>
                     <li class="active">
-                        <a href="indexA.php"><i class="ion ion-home"></i><span>Lista de Objetos</span></a>
+                        <a href="indexA.php"><i class="ion ion-home"></i><span>Agenda de Citas</span></a>
                     </li>
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
+                        <a href="ListaPsicologos.php" ><i class="ion ion-ios-albums-outline"></i><span>Psicologos</span></a>
+                    </li>
+                    <li>
+                        <a href="ListaPacientes.php" ><i class="ion ion-ios-albums-outline"></i><span>Pacientes</span></a>
                     </li>
 
                 </ul>

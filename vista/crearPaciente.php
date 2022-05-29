@@ -33,15 +33,15 @@ if($paciente->Logeado()){
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/local.css">
     <link rel="stylesheet" href="css/sweetalert.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    <!--===============================================================================================-->
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+     ===============================================================================================-->
 </head>
 <body>
 
@@ -49,10 +49,6 @@ if($paciente->Logeado()){
 
 
 <div class="container-login100" style="background-image: url('images/Fondo.jpg');" >
-
-
-
-
 
     <div class="wrap-login100">
 
@@ -102,11 +98,9 @@ if($paciente->Logeado()){
 
                 <span class="focus-input100" data-placeholder="&#xf207;"></span>
             </div>
-            <div class="wrap-input100 validate-">
-                <label class="label" for="frist_name" >Fecha de Nacimiento</label>
-
-                    <input type="text" class="form-control" name="FechaNacimiento" required/>
-
+            <div class="form-group col-6">
+                <label for="frist_name">Fecha de Nacimiento</label>
+                <input class="form-control" type="date" id="fechaN" name="Fecha" required>
             </div>
             <div class="form-group col-6">
                 <label class="label" for="frist_name" >Sexo</label>
@@ -172,26 +166,12 @@ if($paciente->Logeado()){
 <script src="js/sweetalert2@8.js"></script>
 <!--===============================================================================================-->
 <script src="js/Operaciones.js"></script>
-
+<!--
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+-->
 
-<script>
-    $(function() {
-        $('input[name="FechaNacimiento"]').daterangepicker({
-            "singleDatePicker": true,
-            "autoApply": true,
-            "alwaysShowCalendars": true,
-            "startDate": moment(),
-            "endDate": "05/26/2022",
-            "opens": "left",
-            "drops": "auto"
-        }, function(start, end, label) {
-            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-        });
-    });
-</script>
 
 
 </body>
