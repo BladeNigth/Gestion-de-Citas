@@ -273,6 +273,103 @@
                 echo '<tr>No hay Pacientes Registrados</tr>';
             }
         }
+
+        public function HaycitasPsicologo($user){
+
+            $this->ConectarDB();
+            $query = $this->conexion->prepare(
+                "SELECT p.nombre_completo as nombre,c.tipo_cita as servicio,c.fecha_cita as fecha,
+                        c.hora_cita as hora,c.idcita as cita
+                    FROM cita c inner join usuario u on c.usuario_idusuario = u.idusuario
+                    inner join paciente p on c.paciente_idpaciente = p.idpaciente
+                    inner join estado e on c.estado_idestado = e.idestado 
+                    where u.nombre_usuario = '$user' and e.nombre_estado = 'POR ATENDER'");
+            $query->execute();
+            if($query->rowCount() >= "1"){
+
+                while ($datosUsuarios = $query->fetch(PDO::FETCH_ASSOC)){
+
+                    echo '<div class="lista" ><tr>';
+                    echo '<td>'.$datosUsuarios['nombre'].'</td>';
+                    echo '<td>'.$datosUsuarios['servicio'].'</td>';
+                    echo '<td>'.$datosUsuarios['fecha'].'</td>';
+                    echo '<td>'.$datosUsuarios['hora'].'</td>';
+                    echo '<td align="center"><form action="tramite.php" method="post"><button id="reagendar" name="cancelar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Cancelar</em></button></form></td>';
+                    echo '<td align="center"><form action="tramite.php" method="post"><button id="cancelar" name="atendida" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Cita Atendida</em></button></form></td>';
+                    //onclick=cancelarCita("'.$datosUsuarios['cita'].'")
+                    echo '</tr></div>';
+
+                }
+
+            }else{
+                echo '<tr>No tienes Citas por atender</tr>';
+            }
+
+        }
+
+        public function hayhistocitasPsico($user){
+            $this->ConectarDB();
+            $query = $this->conexion->prepare(
+                "SELECT p.nombre_completo as nombre,c.tipo_cita as servicio,c.fecha_cita as fecha,
+                        c.hora_cita as hora,c.idcita as cita, e.nombre_estado as estado
+                    FROM cita c inner join usuario u on c.usuario_idusuario = u.idusuario
+                    inner join paciente p on c.paciente_idpaciente = p.idpaciente
+                    inner join estado e on c.estado_idestado = e.idestado 
+                    where u.nombre_usuario = '$user' and e.nombre_estado != 'POR ATENDER'");
+            $query->execute();
+            if($query->rowCount() >= "1"){
+
+                while ($datosUsuarios = $query->fetch(PDO::FETCH_ASSOC)){
+
+                    echo '<div class="lista" ><tr>';
+                    echo '<td>'.$datosUsuarios['nombre'].'</td>';
+                    echo '<td>'.$datosUsuarios['servicio'].'</td>';
+                    echo '<td>'.$datosUsuarios['fecha'].'</td>';
+                    echo '<td>'.$datosUsuarios['hora'].'</td>';
+                    echo '<td>'.$datosUsuarios['estado'].'</td>';
+                    echo '</tr></div>';
+
+                }
+
+            }else{
+                echo '<tr>No tienes Historial de citas</tr>';
+            }
+        }
+
+        public function hayCitas(){
+            $this->ConectarDB();
+            $query = $this->conexion->prepare(
+                "SELECT p.nombre_completo as nombrep,u.nombre_completo as nombreu,
+                        c.tipo_cita as servicio,c.fecha_cita as fecha,
+                        c.hora_cita as hora,e.nombre_estado as estado, c.idcita as cita
+                    FROM cita c inner join usuario u on c.usuario_idusuario = u.idusuario
+                    inner join paciente p on c.paciente_idpaciente = p.idpaciente
+                    inner join estado e on c.estado_idestado = e.idestado ");
+            $query->execute();
+            if($query->rowCount() >= "1"){
+                while ($datosUsuarios = $query->fetch(PDO::FETCH_ASSOC)){
+
+                    echo '<div class="lista" ><tr>';
+                    echo '<td>'.$datosUsuarios['nombreu'].'</td>';
+                    echo '<td>'.$datosUsuarios['servicio'].'</td>';
+                    echo '<td>'.$datosUsuarios['nombrep'].'</td>';
+                    echo '<td>'.$datosUsuarios['fecha'].'</td>';
+                    echo '<td>'.$datosUsuarios['hora'].'</td>';
+                    echo '<td>'.$datosUsuarios['estado'].'</td>';
+                    if($datosUsuarios['estado'] === "POR ATENDER" ) {
+                        echo '<td align="center"><form action="tramite.php" method="post"><button id="cancelar" name="cancelar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Cancelar</em></button></form></td>';
+                    }else{
+                        echo '<td></td>';
+                    }
+                    echo '</tr></div>';
+                    //onclick=cancelarCita("'.$datosUsuarios['cita'].'")
+                }
+            }else{
+                echo '<tr>No tienes Citas por atender</tr>';
+            }
+
+        }
+
         public function EliminarUsuario($user){
 
             $this->ConectarDB();
@@ -285,5 +382,7 @@
             $query = $this->conexion->prepare("DELETE FROM paciente WHERE usuario_paciente = '$user'");
             $query->execute();
         }
+
+
 
     }

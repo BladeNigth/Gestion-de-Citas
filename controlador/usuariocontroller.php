@@ -201,4 +201,22 @@
 
         }
 
+        public function mostrarCPsicologo($user){
+
+            $this->usuariodao->HaycitasPsicologo($user);
+
+        }
+
+        public function HistocitasPsico($user){
+
+            $this->usuariodao->hayhistocitasPsico($user);
+
+        }
+
+        public function vercitas (){
+
+            $this->usuariodao->hayCitas();
+
+        }
+
     }

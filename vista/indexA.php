@@ -104,7 +104,40 @@
         </div>
         <div class="main-content" >
             <section class="section">
+                <h1 class="section-header">
+                    <div>Citas</div>
+                </h1>
+                <div class="card-body">
+                    <div class="card" >
+                        <div class="col-md-12">
+                            <div class="tile">
+                                <div class="tile-body">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Psicologo</th>
+                                            <th>Servicio</th>
+                                            <th>Paciente</th>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Estado</th>
+                                            <th>Cancelar</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
 
+                                        $usuario->vercitas();
+
+                                        ?>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
         <footer class="main-footer">
@@ -127,6 +160,13 @@
 <script src="dist/modules/chart.min.js"></script>
 <script src="dist/modules/summernote/summernote-lite.js"></script>
 <script src="dist/js/scripts.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">$('#sampleTable').DataTable();</script>
+<!--=============================================================================================-->
+<script src="js/sweetalert2@8.js"></script>
+<!--=============================================================================================-->
+<script src="js/Operaciones.js"></script>
 
 </body>
 </html>

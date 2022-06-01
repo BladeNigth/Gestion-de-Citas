@@ -66,7 +66,7 @@
         <div class="main-sidebar">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="indexA.php">Gestion De Citas</a>
+                    <a href="iniciop.php">Gestion De Citas</a>
                 </div>
                 <div class="sidebar-user">
                     <div class="sidebar-user-picture">
@@ -86,12 +86,15 @@
                 <ul class="sidebar-menu">
                     <li class="menu-header">Principal</li>
                     <li class="active">
-                        <a href="indexA.php"><i class="ion ion-home"></i><span>Lista de Objetos</span></a>
+                        <a href="iniciop.php"><i class="ion ion-home"></i><span>Mis Citas</span></a>
                     </li>
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="MostrarUsuarios.php" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
+                        <a href="PedirCita.php" ><i class="ion ion-ios-albums-outline"></i><span>Pedir Citas</span></a>
+                    </li>
+                    <li>
+                        <a href="HcitasPaciente.php" ><i class="ion ion-ios-albums-outline"></i><span>Historial de citas</span></a>
                     </li>
 
                 </ul>
@@ -100,7 +103,46 @@
         </div>
         <div class="main-content" >
             <section class="section">
+                <h1 class="section-header">
+                    <div>Mis Citas</div>
+                </h1>
+                <div class="card-body">
+                    <div class="card" >
+                        <div class="col-md-12">
+                            <div class="tile">
+                                <div class="tile-body">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Psicologo</th>
+                                            <th>Servicio</th>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Reagendar</th>
+                                            <th>Cancelar</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
 
+                                       $paciente->mostrarmisCitas($perf);
+
+                                        ?>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-login100-form-btn">
+
+                            <h1 class="section-header" id="crear_paciente">
+                                <a style="text-align: center" class="color-letra" href="PedirCita.php">Pedir Cita</a>
+                            </h1>
+
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
         <footer class="main-footer">
@@ -123,6 +165,14 @@
 <script src="dist/modules/chart.min.js"></script>
 <script src="dist/modules/summernote/summernote-lite.js"></script>
 <script src="dist/js/scripts.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">$('#sampleTable').DataTable();</script>
+<!--=============================================================================================-->
+<script src="js/sweetalert2@8.js"></script>
+<!--=============================================================================================-->
+<script src="js/Operaciones.js"></script>
+
 
 </body>
 </html>

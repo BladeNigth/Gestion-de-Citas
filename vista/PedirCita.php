@@ -1,19 +1,18 @@
 <?php
 session_start();
-
-require '../controlador/usuariocontroller.php';
-$usuario = new UsuarioController();
-if(!$usuario->LogeadoPracticante()){
-    $usuario->cerrarSesion('cerrarSesion');
+require_once '../controlador/pacientecontroller.php';
+$paciente = new PacienteController();
+if (!$paciente->Logeado()){
+    $paciente->cerrarSesion('cerrarSesion');
 }else{
-    print "<script> window.location= 'loginpsicologo.php'; </script> ";
+    print "<script> window.location= 'login.php'; </script> ";
 }
 
 $perf = "";
-$perf = $_SESSION['user'];
-
+$perf = $_SESSION['paciente'];
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,7 @@ $perf = $_SESSION['user'];
     <link rel="stylesheet" href="dist/modules/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="dist/css/demo.css">
     <link rel="stylesheet" href="dist/css/style.css">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 </head>
 
@@ -51,7 +50,7 @@ $perf = $_SESSION['user'];
                         <i class="ion ion-android-person d-lg-none"></i>
                         <div class="d-sm-none d-lg-inline-block"><?php echo $perf?></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="profileA.php" class="dropdown-item has-icon">
+                        <a href="PerfilPaciente.php" class="dropdown-item has-icon">
                             <i class="ion ion-android-person"></i> Perfil
                         </a>
 
@@ -67,7 +66,7 @@ $perf = $_SESSION['user'];
         <div class="main-sidebar">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="indexA.php">Gestion De Citas</a>
+                    <a href="iniciop.php">Gestion De Citas</a>
                 </div>
                 <div class="sidebar-user">
                     <div class="sidebar-user-picture">
@@ -77,22 +76,25 @@ $perf = $_SESSION['user'];
                     </div>
                     <div class="sidebar-user-details">
                         <div class="user-name"> <?php
-                            $usuario->mostrarNombre($perf);
+                            $paciente->mostrarNombre($perf);
                             ?></div>
                         <div class="user-role">
-                            PRACTICANTE
+                            PACIENTE
                         </div>
                     </div>
                 </div>
                 <ul class="sidebar-menu">
                     <li class="menu-header">Principal</li>
                     <li class="active">
-                        <a href="inicio.php"><i class="ion ion-home"></i><span>Mis Citas</span></a>
+                        <a href="iniciop.php"><i class="ion ion-home"></i><span>Mis Citas</span></a>
                     </li>
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="HcitasPsicologo.php" ><i class="ion ion-ios-albums-outline"></i><span>Historial de citas</span></a>
+                        <a href="PedirCita.php" ><i class="ion ion-ios-albums-outline"></i><span>Pedir Citas</span></a>
+                    </li>
+                    <li>
+                        <a href="HcitasPaciente.php" ><i class="ion ion-ios-albums-outline"></i><span>Historial de citas</span></a>
                     </li>
 
                 </ul>
@@ -102,43 +104,49 @@ $perf = $_SESSION['user'];
         <div class="main-content" >
             <section class="section">
                 <h1 class="section-header">
-                    <div>Perfil</div>
+                    <div>Agendar Cita</div>
                 </h1>
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-body">
-                                    <?php
 
-                                    $usuario->mostrarPerfil($perf);
+                    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                        <div class="card card-primary">
+                            <div class="card-header"><h4>Agendando Cita</h4></div>
 
-                                    ?>
-                                </div>
+                            <div class="card-body">
+                                <form action="PedirCitapaso1.php" method="POST">
+                                    <div class="form-group col-6">
+                                        <label for="frist_name" style="color: #574B90">Tipo de Cita</label>
+                                        <select class="form-control" name="tipocita" required>
+                                            <option value="consulta Psicologica" select >Consulta Psicologica</option>
+                                            <option value="Control de terapia">Control de Terapia</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="frist_name" style="color: #574B90" >Psicologo</label>
+                                        <select class="form-control" name="psico" required>
+                                        <?php
+                                        $paciente->mostrarPsicologos();
+                                        ?>
+                                    </div>
+
+                            <!-- <div class="form-group">-->
+                            <?php
+                            echo '<input id="u" type="hidden" value="'.$perf.'" > ';
+                            ?>
+                            <button  name = "continuar" class="btn btn-primary btn-block">
+                                Continuar
+                            </button>
+                            <!-- </div>-->
+                            </form>
+                            </div>
+                            <div class="text-center dropdown-item has-icon">
+                                <a class="txt1" href="iniciop.php">
+                                    Cancelar
+                                </a>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-body p-0">
-                                    <a href="EditarPsicologo.php" class="dropdown-item has-icon" >
-                                        Editar Perfil
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-header">
-                                <div class="card-body p-0">
-                                    <a href="cambiarcontraPsicologo.php" class="dropdown-item has-icon" >
-                                        Cambiar Contraseña
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </section>
         </div>
@@ -162,6 +170,8 @@ $perf = $_SESSION['user'];
 <script src="dist/modules/chart.min.js"></script>
 <script src="dist/modules/summernote/summernote-lite.js"></script>
 <script src="dist/js/scripts.js"></script>
-
+<script src="js/sweetalert2@8.js"></script>
+<!--=============================================================================================-->
+<script src="js/Operaciones.js"></script>
 </body>
 </html>

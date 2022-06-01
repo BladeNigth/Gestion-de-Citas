@@ -87,12 +87,12 @@ $perf = $_SESSION['user'];
                 <ul class="sidebar-menu">
                     <li class="menu-header">Principal</li>
                     <li class="active">
-                        <a href="indexA.php"><i class="ion ion-home"></i><span>Lista de Objetos</span></a>
+                        <a href="inicio.php"><i class="ion ion-home"></i><span>Mis Citas</span></a>
                     </li>
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="MostrarUsuarios.php" ><i class="ion ion-ios-albums-outline"></i><span>Lista De Usuarios</span></a>
+                        <a href="HcitasPsicologo.php" ><i class="ion ion-ios-albums-outline"></i><span>Historial de citas</span></a>
                     </li>
 
                 </ul>

@@ -37,6 +37,7 @@
                     isset($_POST['pass']) && isset($_POST['telefono']) && isset($_POST['identificacion'])
                     && isset($_POST['sexo']) && isset($_POST['Fecha']))
                 {
+
                     $info_usuario = [];
                     array_push($info_usuario,$_POST['username']);
                     array_push($info_usuario,$_POST['pass']);
@@ -46,6 +47,7 @@
                     array_push($info_usuario,$_POST['sexo']);
                     array_push($info_usuario,$_POST['identificacion']);
                     array_push($info_usuario,$_POST['Fecha']);
+                    echo '<script>alert('.$info_usuario[7].')</script>';
                     if($this->pacientedao->ComprobarUsuario($info_usuario[0])){
                         echo "<script> window.onload = function (){
                       MensajeError('El usuario Ya Existe')  
@@ -140,6 +142,89 @@
                 echo 'correcto';
             }else{
                 echo 'incorrecto';
+            }
+
+        }
+
+        public function mostrarmisCitas($user){
+
+            $this->pacientedao->hayCitas($user);
+
+        }
+
+        public function histocitas($user){
+            $this->pacientedao->hayhistocitas($user);
+        }
+
+        public function mostrarPsicologos(){
+
+            $usuarios = $this->pacientedao->buscarPsicologos();
+            $cont = sizeof($usuarios);
+            $sum = 0;
+
+            echo '<option> - Seleccionar Psicologo - </option>';
+            while($sum < $cont){
+                echo '<option value="'.$usuarios[$sum].'"> '.$usuarios[$sum].' </option>';
+                $sum = $sum + 1 ;
+            }
+            echo ' </select>';
+        }
+
+        public function mostrarhorarios($fecha,$user){
+
+            $horarios = $this->pacientedao->buscarhorarios($fecha,$user);
+            if(isset($horarios)) {
+
+                if($horarios === "crearhorario"){
+                    $this->pacientedao->crearHorarios($fecha,$user);
+                    $horarios = $this->pacientedao->buscarhorarios($fecha,$user);
+                    $cont = sizeof($horarios);
+                    $sum = 0;
+                    echo '<div class="form-group col-6">
+                      		<label for="frist_name" style="color: #574B90">Horarios Disponibles</label>
+						<select class="form-control" name="horario" required>';
+                    echo '<option> - Seleccionar Horario - </option>';
+                    while ($sum < $cont) {
+                        echo '<option value="' . $horarios[$sum] . '"> ' . $horarios[$sum] . ' </option>';
+                        $sum = $sum + 1;
+                    }
+                    echo '</div>';
+                }else {
+                    $cont = sizeof($horarios);
+                    $sum = 0;
+                    echo '<div class="form-group col-6">
+                      		<label for="frist_name" style="color: #574B90">Horarios Disponibles</label>
+						<select class="form-control" name="horario" required>';
+                    echo '<option> - Seleccionar Horario - </option>';
+                    while ($sum < $cont) {
+                        echo '<option value="' . $horarios[$sum] . '"> ' . $horarios[$sum] . ' </option>';
+                        $sum = $sum + 1;
+                    }
+                    echo '</div>';
+                }
+            }else{
+
+               // $this->pacientedao->crearHorarios($fecha,$user);
+            }
+
+        }
+
+        public function agendarCita(){
+
+            if(isset($_POST['agendar'])) {
+                $descripcion = $_POST['descripcion'];
+                $tipo = $_POST['tipo'];
+                $psicologo = $_POST['psico'];
+                $fecha = $_POST['fh'];
+                $horario = $_POST['horario'];
+                $paciente = $_SESSION['paciente'];
+                $est = 1;
+                $ids = $this->pacientedao->saberids($psicologo,$paciente);
+                $psicologo = $ids[1];
+                $paciente = $ids[0];
+                $this->pacientedao->agendar($descripcion,$tipo,$paciente,$fecha,$horario,$psicologo,$est);
+
+
             }
 
         }

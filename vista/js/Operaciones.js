@@ -139,6 +139,15 @@ function MensajeCorrecto(mensaje){
 	 })
 
 }
+function Agendar(mensaje){
+	Swal.fire({
+		type: 'success',
+		title: 'Operacion exitosa',
+		text: mensaje
+	}).then(function() {
+		window.location = "iniciop.php";
+	});
+}
 function EditarU(mensaje){
 	Swal.fire({
 		type: 'success',

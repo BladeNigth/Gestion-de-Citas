@@ -4,6 +4,7 @@ require_once '../controlador/pacientecontroller.php';
 $paciente = new PacienteController();
 if (!$paciente->Logeado()){
     $paciente->cerrarSesion('cerrarSesion');
+    $paciente->agendarCita();
 }else{
     print "<script> window.location= 'login.php'; </script> ";
 }
@@ -29,7 +30,7 @@ $perf = $_SESSION['paciente'];
     <link rel="stylesheet" href="dist/modules/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="dist/css/demo.css">
     <link rel="stylesheet" href="dist/css/style.css">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 </head>
 
@@ -104,43 +105,48 @@ $perf = $_SESSION['paciente'];
         <div class="main-content" >
             <section class="section">
                 <h1 class="section-header">
-                    <div>Editar</div>
+                    <div>Agendar Cita</div>
                 </h1>
                 <div class="row">
 
                     <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
                         <div class="card card-primary">
-                            <div class="card-header"><h4>Cambiar Contra</h4></div>
+                            <div class="card-header"><h4>Agendando Cita</h4></div>
 
                             <div class="card-body">
                                 <form method="POST">
-                                    <div class="form-group col-6">
-                                        <label for="frist_name" style="color: #574B90" >Contraseña Actual</label>
-                                        <input required class="form-control"  type="password" Id="passActual"  name="passActual" placeholder="Contraseña Actual">
-                                    </div>
+
+                                    <?php
+                                    echo '<input id="Tipo" name = "tipo" type="hidden" value="'.$_POST['tipocita'].'" > ';
+                                    echo '<input id="Psico" name = "psico" type="hidden" value="'.$_POST['psico'].'" > ';
+                                    echo '<input id="fechacorrecta" name = "fh" type="hidden" > ';
+                                    ?>
 
                                     <div class="form-group col-6">
-                                        <label for="frist_name" style="color: #574B90">Contraseña Nueva</label>
-                                        <input required class="form-control" type="password" id="passNueva" name="passNueva" placeholder="Contraseña Nueva"
-                                        >
+                                        <label for="frist_name" style="color: #574B90">Asunto</label>
+                                        <textarea type="text" class="form-control" name="descripcion" maxlength="100">escribe el asunto de la cita</textarea>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="frist_name" style="color: #574B90">Confirma Contraseña Nueva</label>
-                                        <input  required  class="form-control" type="password" id="passNuevaC" name="passNuevaC" placeholder="Contraseña Nueva"
-                                        >
+                                        <label for="frist_name" style="color: #574B90">Seleccionar Fecha</label>
+                                        <input type="text" class="form-control" name="calendario" />
                                     </div>
-                            </div>
+                                    <div id="respuesta"></div>
+
+
                             <!-- <div class="form-group">-->
-                            <?php
-                            echo '<input id="u" type="hidden" value="'.$perf.'" > ';
-                            ?>
-                            <button name = "ccontra"  onclick="validar(event);"  class="btn btn-primary btn-block">
-                                Cambiar
+                            <button  type="submit" value="send" name = "agendar" class="btn btn-primary btn-block">
+                                Agendar
                             </button>
                             <!-- </div>-->
                             </form>
+                            </div>
                             <div class="text-center dropdown-item has-icon">
-                                <a class="txt1" href="PerfilPaciente.php">
+                                <a class="txt1" href="PedirCita.php">
+                                    atras
+                                </a>
+                            </div>
+                            <div class="text-center dropdown-item has-icon">
+                                <a class="txt1" href="iniciop.php">
                                     Cancelar
                                 </a>
                             </div>
@@ -173,69 +179,38 @@ $perf = $_SESSION['paciente'];
 <!--=============================================================================================-->
 <script src="js/Operaciones.js"></script>
 
+<!--<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
-    function validar(event){
+    $(function() {
+        const fecha = new Date();
+        $('input[name="calendario"]').daterangepicker({
+            "singleDatePicker": true,
+            "autoApply": true,
+            "startDate": fecha,
+            "minDate": fecha,
 
-        if(document.getElementById("passNueva").value !== "") {
-            if (document.getElementById("passNueva").value === document.getElementById("passNuevaC").value) {
-                if(document.getElementById("passActual").value !== document.getElementById("passNueva").value ){
-                    event.preventDefault();
-                    var evento = "evento=cambiarcontraP&user="+document.getElementById("u").value+"&contra="+
-                        document.getElementById("passActual").value+ "&contraN="+document.getElementById("passNueva").value;
-                    $.ajax({
-                        url: '../controlador/evento.php',
-                        type: 'post',
-                        data: evento,
-                        datatype: "html",
-                        success: function (response){
-                            if (response === "correcto"){
-                                Swal.fire({
-                                    type: 'success',
-                                    title: 'Operacion Exitosa...',
-                                    text: 'La Contraseña ha sido Cambiada Exitosamente'
-                                }).then(function() {
-                                    window.location = "PerfilPaciente.php";
-                                });
-                            }else{
-                                Swal.fire({
-                                    type: 'error',
-                                    title: 'Oops...',
-                                    text: 'Contraseña Actual Incorrecta'
-                                })
-                            }
-                        },
-                        error: function (){
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: 'error'
-                            })
-                        }
-
-                    });
-
-                }else{
-                    swal.fire({
-                        type: 'error',
-                        title: 'Opps',
-                        text: 'La nueva contraseña no puede ser igual a la antigua'
-                    })
-                    event.preventDefault();
-
+        }, function(start, end, label) {
+            //console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            document.getElementById("fechacorrecta").value = start.format('YYYY/MM/DD');
+            var evento = "evento=cargarhorarios&fecha="+start.format('YYYY/MM/DD')+"&user="+document.getElementById("Psico").value;
+            $.ajax({
+                url: '../controlador/evento.php',
+                type: 'post',
+                data: evento,
+                datatype: "html",
+                success: function (response){
+                    $('#respuesta').html(response).fadeIn();
                 }
-            }else{
-                Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Las Contraseñas nuevas no son iguales!'
-                })
-                event.preventDefault();
-            }
-        }else{
+            });
+        });
+    });
 
-        }
-    }
+
 </script>
+
 
 </body>
 </html>

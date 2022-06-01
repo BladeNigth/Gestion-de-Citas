@@ -51,7 +51,7 @@ $perf = $_SESSION['user'];
                         <i class="ion ion-android-person d-lg-none"></i>
                         <div class="d-sm-none d-lg-inline-block"><?php echo $perf?></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="profileA.php" class="dropdown-item has-icon">
+                        <a href="PerfilPsicologo.php" class="dropdown-item has-icon">
                             <i class="ion ion-android-person"></i> Perfil
                         </a>
 
@@ -92,7 +92,7 @@ $perf = $_SESSION['user'];
 
                     <li class="menu-header">Opciones</li>
                     <li>
-                        <a href="HcitasPsicologo.php" ><i class="ion ion-ios-albums-outline"></i><span>Historial de citas</span></a>
+                        <a href="HcitasPsicologo.php" ><i class="ion ion-ios-albums-outline"></i><span>Historial de Citas</span></a>
                     </li>
 
                 </ul>
@@ -102,43 +102,36 @@ $perf = $_SESSION['user'];
         <div class="main-content" >
             <section class="section">
                 <h1 class="section-header">
-                    <div>Perfil</div>
+                    <div>Historial</div>
                 </h1>
-                <div class="row">
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-body">
-                                    <?php
+                <div class="card-body">
+                    <div class="card" >
+                        <div class="col-md-12">
+                            <div class="tile">
+                                <div class="tile-body">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Paciente</th>
+                                            <th>Servicio</th>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
 
-                                    $usuario->mostrarPerfil($perf);
+                                        $usuario->HistocitasPsico($perf);
 
-                                    ?>
+                                        ?>
+                                        </tbody>
+                                    </table>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-body p-0">
-                                    <a href="EditarPsicologo.php" class="dropdown-item has-icon" >
-                                        Editar Perfil
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-header">
-                                <div class="card-body p-0">
-                                    <a href="cambiarcontraPsicologo.php" class="dropdown-item has-icon" >
-                                        Cambiar Contraseña
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </section>
         </div>
@@ -162,6 +155,13 @@ $perf = $_SESSION['user'];
 <script src="dist/modules/chart.min.js"></script>
 <script src="dist/modules/summernote/summernote-lite.js"></script>
 <script src="dist/js/scripts.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/Data Table/plugins/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">$('#sampleTable').DataTable();</script>
+<!--=============================================================================================-->
+<script src="js/sweetalert2@8.js"></script>
+<!--=============================================================================================-->
+<script src="js/Operaciones.js"></script>
 
 </body>
 </html>

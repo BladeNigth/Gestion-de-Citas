@@ -24,5 +24,9 @@
         case 'eliminarPaciente':
             $usuariodao->EliminarPaciente($_POST["user"]);
             break;
+        case 'cargarhorarios':
+
+            $paciente->mostrarhorarios($_POST['fecha'],$_POST['user']);
+            break;
 
     }

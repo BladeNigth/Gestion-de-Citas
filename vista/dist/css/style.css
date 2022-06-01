@@ -19,6 +19,13 @@ button {
 	background: transparent;
 }
 
+#reagendar{
+	background: #d1d7de;
+}
+#cancelar{
+	background: #d1d7de;
+}
+
 #crear_paciente{
 	width: 180px !important;
 	margin-left: 430px;
