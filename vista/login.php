@@ -9,6 +9,22 @@
         print "<script> window.location= 'iniciop.php'; </script> ";
     }
 
+if(!isset($_SESSION['userA'])){
+    if(!isset($_SESSION['user'])){
+        if(!isset($_SESSION['paciente'])){
+
+        }else{
+            print "<script> window.location= 'Iniciop.php'; </script> ";
+        }
+    }else{
+        print "<script> window.location= 'Inicio.php'; </script> ";
+    }
+}else{
+    print "<script> window.location= 'IndexA.php'; </script> ";
+}
+
+
+
 ?>
 
 <!DOCTYPE html>

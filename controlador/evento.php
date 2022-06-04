@@ -28,5 +28,10 @@
 
             $paciente->mostrarhorarios($_POST['fecha'],$_POST['user']);
             break;
-
+        case 'ccitapaciente':
+            $paciente->cancelarCitapaciente($_POST['cita']);
+            break;
+        case 'ccitapsicologo':
+            $usuario->cancelarCita($_POST['cita']);
+            break;
     }

@@ -161,9 +161,8 @@
                     echo '<td>'.$datosUsuarios['servicio'].'</td>';
                     echo '<td>'.$datosUsuarios['fecha'].'</td>';
                     echo '<td>'.$datosUsuarios['hora'].'</td>';
-                    echo '<td align="center"><form action="tramite.php" method="post"><button id="reagendar" name="reagendar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Reagendar</em></button></form></td>';
-                    echo '<td align="center"><form action="tramite.php" method="post"><button id="cancelar" name="cancelar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Cancelar</em></button></form></td>';
-                    //onclick=cancelarCita("'.$datosUsuarios['cita'].'")
+                    echo '<td align="center"><form method="post"><button id="reagendar" name="reagendar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Reagendar</em></button></form></td>';
+                    echo '<td align="center"><button onclick=cancelarcitapaciente("'.$datosUsuarios['cita'].'") id="cancelar" name="cancelar" class="btn btn-default" ><em class="dropdown-item has-icon" >Cancelar</em></button></td>';
                     echo '</tr></div>';
 
                 }
@@ -198,6 +197,8 @@
                     echo '<td>'.$datosUsuarios['estado'].'</td>';
                     if($datosUsuarios['estado'] === "ATENDIDA" ) {
                         echo '<td align="center"><form action="tramite.php" method="post"><button id="reagendar" name="reseña" class="btn btn-default" value="' . $datosUsuarios['cita'] . '"><em class="dropdown-item has-icon" >Reseña</em></button></form></td>';
+                    }else{
+                        echo '<td></td>';
                     }
                     //onclick=cancelarCita("'.$datosUsuarios['cita'].'")
                     echo '</tr></div>';
@@ -389,5 +390,44 @@
 					 </script>";
 
         }
+
+        public function cancelarcPaciente($idc){
+
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("SELECT u.nombre_usuario as nu,u.idusuario as id,
+                                            p.usuario_paciente as up, c.fecha_cita as fh , hora_cita as hc, 
+                                            turno_idturno as t
+                                            FROM cita c inner join usuario u on c.usuario_idusuario = 
+                                            u.idusuario inner join paciente p on c.paciente_idpaciente =
+                                            p.idpaciente WHERE idcita ='$idc' ");
+            $query->execute();
+
+            $datos = $query->fetch(PDO::FETCH_ASSOC);
+
+            $t = $datos['t'];
+            $hora = $datos['hc'];
+            $fecha = $datos['fh'];
+            $u = $datos['id'];
+            $query2 = $this->conexion->prepare("SELECT id_fecha FROM fecha_horario WHERE fecha = '$fecha' and
+                                         usuario_idusuario = '$u' ");
+            $query2->execute();
+            $idfecha = $query2->fetch(PDO::FETCH_ASSOC);
+            $idf = $idfecha['id_fecha'];
+            $query = $this->conexion->prepare("SELECT idhorarios FROM horarios WHERE horario = '$hora' 
+                                                    and turno_idturno = '$t' ");
+            $query->execute();
+            $idh = $query->fetch(PDO::FETCH_ASSOC);
+            $idhora = $idh['idhorarios'];
+
+            $query2 = $this->conexion->prepare("UPDATE usuario_has_horario SET estado_horario_id_estado = 1
+                                        WHERE fecha_horario_id_fecha = '$idf' and horarios_idhorarios = '$idhora' ");
+            $query2->execute();
+
+            $consulta = $this->conexion->prepare("UPDATE cita SET estado_idestado = 3 WHERE idcita = '$idc' ");
+            $consulta->execute();
+            echo "cita Cancelada";
+        }
+
+
 
     }

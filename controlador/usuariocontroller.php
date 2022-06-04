@@ -13,7 +13,7 @@
         }
 
         public function Logeado(){
-            if(!isset($_SESSION['Tipo_user']) )
+            if(!isset($_SESSION['userA']) )
                 return true;
             return false;
         }
@@ -216,6 +216,13 @@
         public function vercitas (){
 
             $this->usuariodao->hayCitas();
+
+        }
+
+        public function cancelarCita($idcita){
+
+           $this->usuariodao->cancelarc($idcita);
+
 
         }
 

@@ -229,4 +229,11 @@
 
         }
 
+        public function cancelarCitapaciente($idcita){
+
+
+            $this->pacientedao->cancelarcPaciente($idcita);
+
+        }
+
     }

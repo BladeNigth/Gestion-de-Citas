@@ -37,6 +37,72 @@ function eliminarU(user){
        
 })}
 
+function cancelarcitapaciente(idcita){
+	var evento = "evento=ccitapaciente&cita="+idcita;
+	Swal.fire({
+		title: '¿Estás seguro de Cancelar esta Cita ',
+		text: idcita,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si, Cancelala!'
+	}).then((result) => {
+		if (result.value){
+			$.ajax({
+				url: '../controlador/evento.php',
+				type: "POST",
+				data: evento,
+				dataType: "html",
+				success: function (response) {
+						Swal.fire({
+							type: 'success',
+							title: 'Operacion exitosa',
+							text: response,
+						}).then(function() {
+							window.location = "iniciop.php";
+						});
+				}
+			});
+		}
+	})
+}
+
+function cancelarcitapsicologo(idcita){
+	var evento = "evento=ccitapsicologo&cita="+idcita;
+	Swal.fire({
+		title: '¿Estás seguro de Cancelar esta Cita ',
+		text: idcita,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si, Cancelala!'
+	}).then((result) => {
+		if (result.value){
+			$.ajax({
+				url: '../controlador/evento.php',
+				type: "POST",
+				data: evento,
+				dataType: "html",
+				success: function (response) {
+
+						Swal.fire({
+							type: 'success',
+							title: 'Operacion exitosa',
+							text: response,
+						}).then(function () {
+							window.location = "inicio.php";
+						});
+
+				}
+			});
+		}
+	})
+}
+
+
+
 function eliminarPaciente(user){
 	var evento = "evento=eliminarPaciente&user="+user;
 	Swal.fire({
@@ -74,7 +140,8 @@ function eliminarPaciente(user){
 
 		}
 
-	})}
+	})
+}
 
 
 function cambiarcontraU(user){
