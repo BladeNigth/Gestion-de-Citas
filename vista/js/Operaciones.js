@@ -41,7 +41,6 @@ function cancelarcitapaciente(idcita){
 	var evento = "evento=ccitapaciente&cita="+idcita;
 	Swal.fire({
 		title: '¿Estás seguro de Cancelar esta Cita ',
-		text: idcita,
 		type: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
@@ -72,7 +71,7 @@ function cancelarcitapsicologo(idcita){
 	var evento = "evento=ccitapsicologo&cita="+idcita;
 	Swal.fire({
 		title: '¿Estás seguro de Cancelar esta Cita ',
-		text: idcita,
+
 		type: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',

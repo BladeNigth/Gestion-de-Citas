@@ -22,7 +22,7 @@ $perf = $_SESSION['userA'];
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
     <title>Inicio</title>
-    <link rel ="ico" href="/vista/images/icons/favicon.ico">
+    <link rel="icon" type="image/png" href="images/icons/Fondo.ico"/>
     <link rel="stylesheet" href="dist/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="dist/modules/ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
