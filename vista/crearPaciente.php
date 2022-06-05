@@ -120,19 +120,13 @@ if($paciente->Logeado()){
             </div>
         </form>
         <div class="text-center p-t-90">
-            <a class="txt1" href="">
-                Crear Usuario
+            <a class="txt1" href="login.php">
+               Iniciar Sesion
             </a>
         </div>
         <div class="text-center p-t-90">
             <a class="txt1" href="">
                 Recordar Contraseña
-            </a>
-        </div>
-
-        <div class="text-center p-t-90">
-            <a class="txt1" href="index.php">
-                Regresar a Home
             </a>
         </div>
 

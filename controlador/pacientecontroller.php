@@ -3,14 +3,16 @@
     require_once "../modelo/dao/conexion.php";
     require_once "../modelo/entidad/paciente.php";
     require_once "../modelo/dao/pacientedao.php";
-
+    require_once "phpmailer.php";
     class PacienteController {
         private $paciente;
         private $pacientedao;
+        private $enviarcorreos;
         public function __construct()
         {
             $this->pacientedao = new Pacientedao();
-        }
+            $this->enviarcorreos = new EnviarCorreos();
+       }
 
         public function Logeado(){
             if(!isset($_SESSION['paciente']) )
@@ -47,13 +49,13 @@
                     array_push($info_usuario,$_POST['sexo']);
                     array_push($info_usuario,$_POST['identificacion']);
                     array_push($info_usuario,$_POST['Fecha']);
-                    echo '<script>alert('.$info_usuario[7].')</script>';
                     if($this->pacientedao->ComprobarUsuario($info_usuario[0])){
                         echo "<script> window.onload = function (){
                       MensajeError('El usuario Ya Existe')  
                       }</script>";
                     }else{
                         $this->pacientedao->Registrar($info_usuario);
+                        $this->enviarcorreos->pacientecreado($info_usuario[3],$info_usuario[0],$info_usuario[2]);
                         echo "<script> window.onload = function (){
                       MensajeCorrecto('El Usuario ha sido Registrado'); 
                       }</script>";
@@ -220,6 +222,8 @@
                 $paciente = $_SESSION['paciente'];
                 $est = 1;
                 $ids = $this->pacientedao->saberids($psicologo,$paciente);
+                $correo = $this->pacientedao->buscarcorreo($paciente);
+                $this->enviarcorreos->citaregistrada($correo[0],$correo[1],$tipo,$psicologo,$fecha,$horario,$descripcion);
                 $psicologo = $ids[1];
                 $paciente = $ids[0];
                 $this->pacientedao->agendar($descripcion,$tipo,$paciente,$fecha,$horario,$psicologo,$est);

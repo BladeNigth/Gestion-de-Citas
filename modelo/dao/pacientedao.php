@@ -1,12 +1,15 @@
 <?php
     require_once "conexion.php";
+    //require_once "./controlador/phpmailer.php";
+    require "../controlador/phpmailer.php";
     class Pacientedao {
 
         private $paciente;
+        private $enviarcorreos;
 
         public function __construct()
         {
-
+            $this->enviarcorreos = new EnviarCorreos();
         }
 
         public function ConectarDB(){
@@ -362,6 +365,18 @@
 
 
         }
+
+        public function buscarcorreo($paciente){
+            $this->ConectarDB();
+            $query = $this->conexion->prepare("SELECT correo as c, nombre_completo as nc FROM paciente WHERE usuario_paciente = '$paciente'");
+            $query->execute();
+            $correo = $query->fetch(PDO::FETCH_ASSOC);
+            $c = [];
+            array_push($c, $correo['c']);
+            array_push($c,$correo['nc']);
+            return  $c;
+
+        }
         public function agendar($descripcion,$tipo,$paciente,$fecha,$horario,$psico,$est){
             $this->ConectarDB();
 
@@ -396,14 +411,15 @@
             $this->ConectarDB();
             $query = $this->conexion->prepare("SELECT u.nombre_usuario as nu,u.idusuario as id,
                                             p.usuario_paciente as up, c.fecha_cita as fh , hora_cita as hc, 
-                                            turno_idturno as t
+                                            turno_idturno as t, p.correo as c, p.nombre_completo as nombre, 
+                                            u.nombre_completo as psicologo
                                             FROM cita c inner join usuario u on c.usuario_idusuario = 
                                             u.idusuario inner join paciente p on c.paciente_idpaciente =
                                             p.idpaciente WHERE idcita ='$idc' ");
             $query->execute();
 
             $datos = $query->fetch(PDO::FETCH_ASSOC);
-
+            $this->enviarcorreos->citacancelada($datos['c'], $datos['nombre'], $datos['psicologo'],$datos['fh'], $datos['hc'] );
             $t = $datos['t'];
             $hora = $datos['hc'];
             $fecha = $datos['fh'];
