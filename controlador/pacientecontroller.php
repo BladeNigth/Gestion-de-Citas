@@ -240,4 +240,29 @@
 
         }
 
+        public function Rdatoscita($id){
+
+            $datos = $this->pacientedao->recuperar($id);
+
+            echo '<input id="Tipo" name = "tipo" type="hidden" value="'.$datos['tc'].'" > ';
+            echo '<input id="Psico" name = "psico" type="hidden" value="'.$datos['nc'].'" > ';
+
+
+
+        }
+
+        public function reagendarCita(){
+
+            if(isset($_POST['reagen'])){
+                $psicologo = $_POST['psico'];
+                $fecha = $_POST['fh'];
+                $horario = $_POST['horario'];
+                $id = $_POST['re'];
+                $this->pacientedao->reagendar($id,$fecha,$horario,$psicologo);
+                echo "<script> window.onload = function (){
+                     confirmacionreagendar('La cita ha sido reagendada ');
+                      }</script>";
+            }
+        }
+
     }

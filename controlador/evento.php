@@ -34,4 +34,7 @@
         case 'ccitapsicologo':
             $usuario->cancelarCita($_POST['cita']);
             break;
+        case 'atendida':
+            $usuario->citaatendida($_POST['cita']);
+            break;
     }

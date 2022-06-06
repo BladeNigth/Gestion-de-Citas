@@ -164,7 +164,7 @@
                     echo '<td>'.$datosUsuarios['servicio'].'</td>';
                     echo '<td>'.$datosUsuarios['fecha'].'</td>';
                     echo '<td>'.$datosUsuarios['hora'].'</td>';
-                    echo '<td align="center"><form method="post"><button id="reagendar" name="reagendar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Reagendar</em></button></form></td>';
+                    echo '<td align="center"><form action="Reagendar.php" method="post"><button id="reagendar" name="reagendar" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Reagendar</em></button></form></td>';
                     echo '<td align="center"><button onclick=cancelarcitapaciente("'.$datosUsuarios['cita'].'") id="cancelar" name="cancelar" class="btn btn-default" ><em class="dropdown-item has-icon" >Cancelar</em></button></td>';
                     echo '</tr></div>';
 
@@ -444,6 +444,84 @@
             echo "cita Cancelada";
         }
 
+        public function recuperar($id){
 
+            $this->ConectarDB();
+
+            $query = $this->conexion->prepare("SELECT c.tipo_cita as tc,u.nombre_completo as nc FROM cita as c 
+                                                    inner join usuario as u on c.usuario_idusuario = u.idusuario
+                                                    Where c.idcita = '$id'");
+            $query->execute();
+            $datos = $query->fetch(PDO::FETCH_ASSOC);
+            return $datos;
+
+        }
+
+        public function reagendar($id,$f,$h,$psico){
+
+
+
+            $this->ConectarDB();
+
+            //buscar id horarios y fecha
+            $query = $this->conexion->prepare("SELECT H.idhorarios as idh,FH.id_fecha as idf from usuario U inner join turno t on U.turno_idturno = t.idturno 
+                                            inner join fecha_horario FH on U.idusuario = FH.usuario_idusuario 
+                                            inner join usuario_has_horario US on FH.id_fecha = US.fecha_horario_id_fecha
+                                            inner join horarios H on US.horarios_idhorarios = H.idhorarios 
+                                            inner join estado_horario EH on US.estado_horario_id_estado = EH.id_estado 
+                                            where h.horario = '$h' and FH.fecha = '$f' and u.nombre_completo = '$psico' ");
+
+            $query->execute();
+            $result = [];
+            while ($horarios = $query->fetch(PDO::FETCH_ASSOC)){
+                array_push($result,$horarios['idh']);
+                array_push($result,$horarios['idf']);
+            }
+            //cambiar estado a nuevo horario ocupado
+            $query = $this->conexion->prepare("UPDATE usuario_has_horario SET estado_horario_id_estado = 2 WHERE 
+                                                            horarios_idhorarios = '$result[0]' and fecha_horario_id_fecha = '$result[1]'");
+            $query->execute();
+
+            $this->reagendarhorarioDispo_ocupado($id);
+
+
+            //actualizando fecha y hora en la cita
+            $query6 = $this->conexion->prepare("UPDATE cita set fecha_cita = '$f', hora_cita = '$h' WHERE idcita = '$id' ");
+            $query6->execute();
+
+        }
+
+        public function reagendarhorarioDispo_ocupado($id){
+            $this->ConectarDB();
+            //buscar id horario anterior para poner disponible
+
+            $query2 = $this->conexion->prepare("SELECT u.nombre_usuario as nu,u.idusuario as id,
+                                            c.fecha_cita as fh , hora_cita as hc, 
+                                            turno_idturno as t,
+                                            u.nombre_completo as psicologo
+                                            FROM cita c inner join usuario u on c.usuario_idusuario = 
+                                            u.idusuario WHERE idcita = '$id' ");
+            $query2->execute();
+            $datos = $query2->fetch(PDO::FETCH_ASSOC);
+            echo 'esto', ' id',$id ,$datos['fh'];
+            $t = $datos['t'];
+            $hora = $datos['hc'];
+            $fecha = $datos['fh'];
+            $u = $datos['id'];
+            $query3 = $this->conexion->prepare("SELECT id_fecha FROM fecha_horario WHERE fecha = '$fecha' and
+                                         usuario_idusuario = '$u' ");
+            $query3->execute();
+            $idfecha = $query3->fetch(PDO::FETCH_ASSOC);
+            $idf = $idfecha['id_fecha'];
+            $query4 = $this->conexion->prepare("SELECT idhorarios FROM horarios WHERE horario = '$hora' 
+                                                    and turno_idturno = '$t' ");
+            $query4->execute();
+            $idh = $query4->fetch(PDO::FETCH_ASSOC);
+            $idhora = $idh['idhorarios'];
+            //cambiando a disponible el anterior horario ocupado
+            $query5 = $this->conexion->prepare("UPDATE usuario_has_horario SET estado_horario_id_estado = 1
+                                        WHERE fecha_horario_id_fecha = '$idf' and horarios_idhorarios = '$idhora' ");
+            $query5->execute();
+        }
 
     }

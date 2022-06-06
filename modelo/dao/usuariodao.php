@@ -295,8 +295,18 @@
                     echo '<td>'.$datosUsuarios['fecha'].'</td>';
                     echo '<td>'.$datosUsuarios['hora'].'</td>';
                     echo '<td align="center"><button onclick=cancelarcitapsicologo("'.$datosUsuarios['cita'].'") id="reagendar" name="cancelar" class="btn btn-default" ><em class="dropdown-item has-icon" >Cancelar</em></button></td>';
-                    echo '<td align="center"><form action="tramite.php" method="post"><button id="cancelar" name="atendida" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Cita Atendida</em></button></form></td>';
-                    //onclick=cancelarCita("'.$datosUsuarios['cita'].'")
+                    date_default_timezone_set('America/Bogota');
+                    $f = date("Y-m-d ", time());
+                    $id = $datosUsuarios["cita"];
+                    $query2 = $this->conexion->prepare("SELECT * FROM cita WHERE idcita = '$id' and fecha_cita >= '$f' ");
+                    $query2->execute();
+                    if($query2->rowCount() >= 1 ){
+                        echo '<td align="center"><form action="tramite.php" method="post"><button disabled id="cancelar" name="atendida" class="btn btn-default" value="'.$datosUsuarios['cita'].'"><em class="dropdown-item has-icon" >Cita Atendida</em></button></form></td>';
+
+                    }else {
+                       echo '<td align="center"><button onclick=atendida("'.$id.'") id="cancelar" name="atendida" class="btn btn-default"><em class="dropdown-item has-icon" >Cita Atendida</em></button></td>';
+                    }
+
                     echo '</tr></div>';
 
                 }
@@ -423,6 +433,16 @@
             echo "Cita Cancelada";
 
         }
+
+        public function catendida($id){
+
+            $this->ConectarDB();
+
+            $query = $this->conexion->prepare("UPDATE cita SET estado_idestado = 2 WHERE idcita = $id");
+            $query->execute();
+        }
+
+
 
 
 

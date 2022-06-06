@@ -100,7 +100,37 @@ function cancelarcitapsicologo(idcita){
 	})
 }
 
+function  atendida(cita){
+	var evento = "evento=atendida&cita="+cita;
+	Swal.fire({
+		title: '¿Esta cita Fue Atendida? ',
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si esta cita Fue Atendidad!'
+	}).then((result) => {
+		if(result.value) {
+			$.ajax({
+				url: '../controlador/evento.php',
+				type: "POST",
+				data: evento,
+				dataType: "html",
+				success: function (response) {
 
+					Swal.fire({
+						type: 'success',
+						title: 'Operacion exitosa',
+						text: response,
+					}).then(function () {
+						window.location = "inicio.php";
+					});
+
+				}
+			});
+		}
+	})
+}
 
 function eliminarPaciente(user){
 	var evento = "evento=eliminarPaciente&user="+user;
@@ -174,6 +204,17 @@ function Probando(mensaje){
 		  window.close();
 		});
 }
+
+function confirmacionreagendar(mensaje){
+	Swal.fire({
+		type: 'success',
+		title: 'Operacion exitosa',
+		text: mensaje,
+	}).then(function(){
+		window.location = 'iniciop.php'
+	});
+}
+
 
 
 function Cambioc(mensaje){

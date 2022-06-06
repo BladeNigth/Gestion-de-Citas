@@ -226,4 +226,11 @@
 
         }
 
+        public function citaatendida($id){
+
+            $this->usuariodao->catendida($id);
+
+        }
+
+
     }
