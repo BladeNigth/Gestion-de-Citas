@@ -149,7 +149,7 @@ $perf = $_SESSION['user'];
         </div>
         <footer class="main-footer">
             <div class="footer-left">
-                Copyright &copy; 2022 <div class="bullet"></div> Design By <a>Andres Brieva/Leonardo Liñan/Juan Arias</a>
+                Copyright &copy; 2022 <div class="bullet"></div> Design By <a>Andres Brieva/Leonardo Liñan/Juan Arias/Andres Ochoa</a>
             </div>
             <div class="footer-right"></div>
         </footer>

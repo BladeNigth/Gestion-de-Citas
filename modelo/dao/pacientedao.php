@@ -199,7 +199,7 @@
                     echo '<td>'.$datosUsuarios['hora'].'</td>';
                     echo '<td>'.$datosUsuarios['estado'].'</td>';
                     if($datosUsuarios['estado'] === "ATENDIDA" ) {
-                        echo '<td align="center"><form action="tramite.php" method="post"><button id="reagendar" name="reseña" class="btn btn-default" value="' . $datosUsuarios['cita'] . '"><em class="dropdown-item has-icon" >Reseña</em></button></form></td>';
+                        echo '<td align="center"><form action="reseñas.php" method="post"><button id="reagendar" name="reseña" class="btn btn-default" value="' . $datosUsuarios['cita'] . '"><em class="dropdown-item has-icon" >Reseña</em></button></form></td>';
                     }else{
                         echo '<td></td>';
                     }
@@ -341,7 +341,7 @@
                 $query->execute();
                 $idf = $query->fetch(PDO::FETCH_ASSOC);
                 $fid = $idf['id_fecha'];
-                echo $fid;
+
                 $query = $this->conexion->prepare("INSERT INTO usuario_has_horario(horarios_idhorarios, fecha_horario_id_fecha, estado_horario_id_estado)
                     VALUES (7,'$fid',1) , (8,'$fid',1) , (9,'$fid',1)
                                             , (10,'$fid',1) , (11,'$fid',1) , (12,'$fid',1) ");

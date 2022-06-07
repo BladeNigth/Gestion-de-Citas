@@ -37,6 +37,39 @@ function eliminarU(user){
        
 })}
 
+function reagendar(){
+	var evento ="evento=reagendar&fecha="+document.getElementById("fechacorrecta").value+"&hora="
+		+document.getElementById("horario").value+"&idcita="+document.getElementById("idcitas").value
+	+"&practicante="+document.getElementById("Psico").value;
+	Swal.fire({
+		title: '¿reagendar esta cita? ',
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si!'
+	}).then((result) => {
+		if(result.value){
+			$.ajax({
+				url: '../controlador/evento.php',
+				type: "POST",
+				data: evento,
+				dataType: "html",
+				success: function () {
+					Swal.fire({
+						type: 'success',
+						title: 'Operacion exitosa',
+						text: 'la cita fue reagendada',
+					}).then(function() {
+						window.location = "iniciop.php";
+					});
+				},
+			});
+		}
+	})
+}
+
+
 function cancelarcitapaciente(idcita){
 	var evento = "evento=ccitapaciente&cita="+idcita;
 	Swal.fire({

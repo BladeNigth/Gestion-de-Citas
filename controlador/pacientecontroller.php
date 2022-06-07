@@ -184,7 +184,7 @@
                     $sum = 0;
                     echo '<div class="form-group col-6">
                       		<label for="frist_name" style="color: #574B90">Horarios Disponibles</label>
-						<select class="form-control" name="horario" required>';
+						<select class="form-control" id="horario" name="horario" required>';
                     echo '<option> - Seleccionar Horario - </option>';
                     while ($sum < $cont) {
                         echo '<option value="' . $horarios[$sum] . '"> ' . $horarios[$sum] . ' </option>';
@@ -196,7 +196,7 @@
                     $sum = 0;
                     echo '<div class="form-group col-6">
                       		<label for="frist_name" style="color: #574B90">Horarios Disponibles</label>
-						<select class="form-control" name="horario" required>';
+						<select class="form-control" id="horario" name="horario" required>';
                     echo '<option> - Seleccionar Horario - </option>';
                     while ($sum < $cont) {
                         echo '<option value="' . $horarios[$sum] . '"> ' . $horarios[$sum] . ' </option>';
@@ -246,7 +246,7 @@
 
             echo '<input id="Tipo" name = "tipo" type="hidden" value="'.$datos['tc'].'" > ';
             echo '<input id="Psico" name = "psico" type="hidden" value="'.$datos['nc'].'" > ';
-
+            echo '<input id="idcitas" name = "psico" type="hidden" value="'.$id.'" > ';
 
 
         }
@@ -263,6 +263,10 @@
                      confirmacionreagendar('La cita ha sido reagendada ');
                       }</script>";
             }
+        }
+
+        public function ajaxreagendar($psicologo,$fecha,$horario,$id){
+            $this->pacientedao->reagendar($id,$fecha,$horario,$psicologo);
         }
 
     }

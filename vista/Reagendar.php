@@ -4,7 +4,7 @@ require_once '../controlador/pacientecontroller.php';
 $paciente = new PacienteController();
 if (!$paciente->Logeado()){
     $paciente->cerrarSesion('cerrarSesion');
-    $paciente->reagendarCita();
+   // $paciente->reagendarCita();
 }else{
     print "<script> window.location= 'login.php'; </script> ";
 }
@@ -114,7 +114,7 @@ $perf = $_SESSION['paciente'];
                             <div class="card-header"><h4>Agendando Cita</h4></div>
 
                             <div class="card-body">
-                                <form method="POST">
+                              <!--  <form method="POST">-->
 
                                     <?php
                                     $paciente->Rdatoscita($_POST['reagendar']);
@@ -130,11 +130,15 @@ $perf = $_SESSION['paciente'];
 
 
                                     <!-- <div class="form-group">-->
-                                    <button  type="submit" value="send" name = "reagen" class="btn btn-primary btn-block">
+                                    <button  onclick=reagendar()  name = "reagen" class="btn btn-primary btn-block">
                                         Reagendar
                                     </button>
+                                    <!--
+                                    <button  type="submit" value="send" name = "reagen" class="btn btn-primary btn-block">
+                                        Reagendar
+                                    </button>-->
                                     <!-- </div>-->
-                                </form>
+                                <!--</form>-->
                             </div>
                             <div class="text-center dropdown-item has-icon">
                                 <a class="txt1" href="iniciop.php">

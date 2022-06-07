@@ -124,5 +124,25 @@ class EnviarCorreos {
         }
     }
 
+    public function citareagendada($correo,$nombre,$psicologo,$fecha,$hora){
+        try {
+            $this->credenciales();
+            $this->mail->setFrom($this->email, $this->name);
+            $this->mail->addAddress($correo,$nombre);
+            $this->mail->isHTML(true);
+            $this->mail->Subject = "Cita Cancelada";
+            $mensaje = "<h1 style='color:#3498db'> Hola!  $nombre </h1>";
+            $mensaje .= "<p>la cita para el:  $fecha $hora</p>";
+            $mensaje .= "<p>con el Psicologo/a: $psicologo </p><br>";
+            $mensaje .= "<p>ha sido reagendado </p>";
+            $mensaje .= "<p>para el $fecha $hora</p>";
+            $mensaje .= " <p> Administracion de citas PAP</p> ";
+            $this->mail->Body = $mensaje;
+            $this->mail->send();
+        }catch (Exception $e){
+            echo 'Mensaje '.$this->mail->ErrorInfo;
+        }
+    }
+
 
 }

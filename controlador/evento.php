@@ -37,4 +37,8 @@
         case 'atendida':
             $usuario->citaatendida($_POST['cita']);
             break;
+        case 'reagendar':
+
+            $paciente->ajaxreagendar($_POST['practicante'],$_POST['fecha'],$_POST['hora'],$_POST['idcita']);
+            break;
     }
